@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -50,7 +51,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
 
     /**
      * @var string
@@ -84,7 +85,6 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'role',
         'team',
         'avatar',
         'phone',
@@ -111,24 +111,24 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return Collection|array
+     * @return array|Collection|null
      */
-    public static function getPRUser(): Collection|array
+    public static function getPRUser(): Collection|array|null
     {
-        return User::query()
-            ->where('role', 'user')
+        return self::query()
+            ->role('pr')
             ->where('deleted', false)
             ->orderBy('username', 'ASC')
             ->get();
     }
 
     /**
-     * @return Collection|array
+     * @return array|Collection|null
      */
-    public static function getAdminUser(): Collection|array
+    public static function getAdminUser(): Collection|array|null
     {
-        return User::query()
-            ->where('role', 'admin')
+        return self::query()
+            ->role('admin')
             ->where('deleted', false)
             ->orderBy('username', 'ASC')
             ->get();
@@ -139,7 +139,7 @@ class User extends Authenticatable
      */
     public static function getInactiveUsers(): Collection|array
     {
-        return User::all()
+        return self::all()
             ->where('active', false);
     }
 
@@ -148,27 +148,27 @@ class User extends Authenticatable
      */
     public static function getDeletedUsers(): array|Collection
     {
-        return User::all()
+        return self::all()
             ->where('deleted', true);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return array|Collection
      */
-    public static function getUserById($id): array|Collection
+    public static function getUserById(int $id): array|Collection
     {
-        return User::all()
+        return self::all()
             ->where('id', $id);
     }
 
     /**
-     * @param $username
+     * @param string $username
      * @return Collection|array
      */
-    public static function getUserByUsername($username): Collection|array
+    public static function getUserByUsername(string $username): Collection|array
     {
-        return User::all()
+        return self::all()
             ->where('username', $username);
     }
 
@@ -176,49 +176,50 @@ class User extends Authenticatable
      * @param UserRequest $request
      * @return void
      */
-    public function insertUser(UserRequest $request): void
+    public function create(UserRequest $request): void
     {
-        User::query()
+        $user = self::query()
             ->create([
                 'avatar' => 'profile-' . rand(1, 6) . '.webp',
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'email' => $request->email,
                 'password' => Hash::make('Mamateam2022!'),
-                'role' => $request->role,
                 'team' => $request->team,
                 'active' => $request->boolean('active'),
                 'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
             ]);
+        $user->assignRole($request->role);
     }
 
     /**
      * @param UserRequest $request
-     * @param $id
+     * @param int $id
      * @return void
      */
-    public function editUser(UserRequest $request, $id): void
+    public function edit(UserRequest $request, int $id): void
     {
-        User::query()
+        self::query()
             ->where('id', $id)
             ->update([
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'username' => $request->username,
                 'email' => $request->email,
-                'role' => $request->role,
                 'team' => $request->team,
                 'active' => $request->boolean('active')
             ]);
+        $user = self::getUserById($id)->first();
+        $user->syncRoles($request->role);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return void
      */
-    public function deleteUser($id): void
+    public function uDelete(int $id): void
     {
-        User::query()
+        self::query()
             ->where('id', $id)
             ->update([
                 'active' => false,
@@ -227,23 +228,23 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return void
      */
-    public function definitelyDeleteUser($id): void
+    public function defdelete(int $id): void
     {
-        User::query()
+        self::query()
             ->where('id', $id)
             ->delete();
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return void
      */
-    public function restoreUser($id): void
+    public function restore(int $id): void
     {
-        User::query()
+        self::query()
             ->where('id', $id)
             ->update([
                 'active' => false,

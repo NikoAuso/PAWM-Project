@@ -37,15 +37,15 @@ class EventController extends Controller
      * @return RedirectResponse
      * @see Eventi::modificaEvento()
      */
-    public function modificaEvento(EventRequest $request, int $id): RedirectResponse
+    public function edit(EventRequest $request, int $id): RedirectResponse
     {
-        if (Eventi::getEvento($id)->first() === null)
+        if (is_null(Eventi::getEvento($id)->first()))
             return redirect()
-                ->route('lv_a.events.display')
+                ->route('events')
                 ->withErrors('L\'evento non esiste');
-        $this->eventModel->modificaEvento($request, $id);
+        $this->eventModel->edit($request, $id);
         return redirect()
-            ->route('lv_a.events.display')
+            ->route('events')
             ->with('message', 'Evento modificato');
     }
 
@@ -56,12 +56,12 @@ class EventController extends Controller
      * @return RedirectResponse
      * @see Eventi::inserisciEvento()
      */
-    public function inserisciEvento(EventRequest $request): RedirectResponse
+    public function create(EventRequest $request): RedirectResponse
     {
-        $this->eventModel->inserisciEvento($request);
+        $this->eventModel->create($request);
         return redirect()
-            ->route('lv_a.events.display')
-            ->with('message', 'Evento salvato');
+            ->route('events')
+            ->with('message', 'Evento inserito');
     }
 
     /**
@@ -71,15 +71,15 @@ class EventController extends Controller
      * @return RedirectResponse
      * @see Eventi::eliminaEvento()
      */
-    public function eliminaEvento(int $id): RedirectResponse
+    public function delete(int $id): RedirectResponse
     {
         if (Eventi::getEvento($id)->first() === null)
             return redirect()
-                ->route('lv_a.events.display')
+                ->route('events.')
                 ->withErrors('L\'evento non esiste');
-        $this->eventModel->eliminaEvento($id);
+        $this->eventModel->eDelete($id);
         return redirect()
-            ->route('lv_a.events.display')
+            ->route('events')
             ->with('message', 'Evento eliminato');
     }
 
@@ -90,19 +90,19 @@ class EventController extends Controller
      * @return RedirectResponse
      * @see Eventi::deleteDefinitely()
      */
-    public function eliminaDefinitivamenteEvento(int $id): RedirectResponse
+    public function defdelete(int $id): RedirectResponse
     {
-        if (Eventi::getEvento($id)->first() === null)
+        if (is_null(Eventi::getEvento($id)->first()))
             return redirect()
-                ->route('lv_a.events.display')
+                ->route('events')
                 ->withErrors('L\'evento non esiste');
-        elseif (Eventi::getEvento($id)->first()->deleted === 0)
+        elseif (!Eventi::getEvento($id)->first()->deleted)
             return redirect()
-                ->route('lv_a.events.display')
+                ->route('events')
                 ->withErrors('Impossibile eliminare definitivamente l\'evento. L\'evento non è mai stato "eliminato"');
-        $this->eventModel->deleteDefinitely($id);
+        $this->eventModel->defdelete($id);
         return redirect()
-            ->route('lv_a.events.deleted')
+            ->route('events.deleted')
             ->with('message', 'Evento eliminato definitivamente');
     }
 
@@ -113,18 +113,18 @@ class EventController extends Controller
      * @return RedirectResponse
      * @see Eventi::restoreEvent()
      */
-    public function ripristinaEvento(int $id): RedirectResponse
+    public function restore(int $id): RedirectResponse
     {
         if (Eventi::getEvento($id)->first() === null)
             return redirect()
-                ->route('lv_a.events.display')
+                ->route('events.display')
                 ->withErrors('L\'evento non esiste');
         elseif (Eventi::getEvento($id)->first()->deleted === 0)
             return redirect()
-                ->route('lv_a.events.display')
+                ->route('events.display')
                 ->withErrors('Impossibile ripristinare definitivamente l\'evento. L\'evento non è mai stato eliminato');
-        $this->eventModel->restoreEvent($id);
-        return redirect()->route('lv_a.events.deleted')
+        $this->eventModel->restore($id);
+        return redirect()->route('events.deleted')
             ->with('message', 'Evento ripristinato');
     }
 }

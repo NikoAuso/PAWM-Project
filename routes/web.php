@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ListeController;
 use App\Http\Controllers\Admin\TavoliController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Requests\ListeSearchRequest;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
+use function PHPUnit\Framework\isNull;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,57 +34,56 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/event_{id}', [HomeController::class, 'single_event'])->name('singleEvent');
 
-Route::group(['prefix' => 'ar/', 'middleware' => ['auth', 'verified']], function () {
-    //Admin
-    Route::group(['prefix' => 'lv_a/', 'as' => 'lv_a.', 'middleware' => ['can:isAdmin']], function () {
-        Route::get('dashboard', function () {
-            return view('ar/lv_a/dashboard');
-        })->name('dashboard');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    //Admin
+    Route::group(['middleware' => ['role:admin|super-admin']], function () {
         //Logs
         Route::get('logs', [LogViewerController::class, 'index'])->name('logs');
 
-        //Gestione utenti
-        Route::group(['prefix' => 'utenti/', 'as' => 'user.'], function () {
-            Route::post('insert/{page}', [UserController::class, 'inserisciUtente'])->name('insert_save');
-            Route::post('edit/{id}/{page}', [UserController::class, 'modificaUtente'])->name('edit_save');
-            Route::get('delete/{id}/{page}', [UserController::class, 'eliminaUtente'])->name('delete_save');
-            Route::get('def_delete/{id}', [UserController::class, 'eliminaDefinitivamenteUtente'])->name('definitely_delete');
-            Route::get('restore/{id}', [UserController::class, 'ripristinaUtente'])->name('restore');
+        Route::group(['prefix' => 'utenti/', 'as' => 'users.'], function () {
+            Route::get('pr', function () {
+                $data = [
+                    'users' => User::getPRUser()->values(),
+                    'title' => 'PR'
+                ];
+                return view('ar/users/users_display')->with($data);
+            })->name('pr');
 
-            Route::get('user', function () {
-                $users = User::getPRUser()->values();
-                return view('ar/lv_a/users/users_display')
-                    ->with('users', $users)
-                    ->with('title', 'PR semplici');
-            })->name('user');
             Route::get('admin', function () {
-                $users = User::getAdminUser()->values();
-                return view('ar/lv_a/users/users_display')
-                    ->with('users', $users)
-                    ->with('title', 'Amministratori');
+                $data = [
+                    'users' => User::getAdminUser()->values(),
+                    'title' => 'Admin'
+                ];
+                return view('ar/users/users_display')->with($data);
             })->name('admin');
+
+            Route::get('deleted', function () {
+                $data = [
+                    'users' => User::getDeletedUsers()->values(),
+                    'title' => 'PR eliminati'
+                ];
+                return view('ar/users/deleted_users_display')->with($data);
+            })->name('deleted');
+
             Route::get('insert/{page}', function ($page) {
-                return view('ar/lv_a/users/add_user')
+                return view('ar/users/add_user')
                     ->with('page', $page);
             })->name('insert');
+
             Route::get('edit/{id}/{page}', function ($id, $page) {
-                $data = User::getUserById($id)->first();
-                if ($id == 1)
-                    return abort(401, 'Utente non modificabile');
-                elseif (empty($data))
+                $user = User::getUserById($id)->first();
+                if ($user->hasRole('super-admin'))
+                    abort(401, 'Utente non modificabile');
+                elseif (empty($user))
                     abort(403, 'L\'utente non esiste!');
-                return view('ar/lv_a/users/edit_user')
-                    ->with('data', $data)
+                return view('ar/users/edit_user')
+                    ->with('data', $user)
                     ->with('page', $page);
             })->name('edit');
-            Route::get('deleted', function () {
-                $users = User::getDeletedUsers()->values();
-                return view('ar/lv_a/users/deleted_users_display')
-                    ->with('users', $users)
-                    ->with('title', 'PR eliminati');
-            })->name('deleted');
-            Route::get('profile_view/{id}', function ($id) {
+
+            Route::get('profile/{id}', function ($id) {
                 $user = User::getUserById($id)->first();
                 if (empty($user))
                     abort(403, 'L\'utente non esiste!');
@@ -92,35 +93,29 @@ Route::group(['prefix' => 'ar/', 'middleware' => ['auth', 'verified']], function
         });
 
         //Gestione eventi
+        Route::get('eventi', function () {
+            $data = [
+                'events' => Eventi::getEvents(),
+                'eventsNext' => Eventi::getEventsNext(),
+                'eventsOld' => Eventi::getEventsOld(),
+                'jollyEvents' => Eventi::getEventsJolly()
+            ];
+            return view('ar/event/events_display')
+                ->with($data);
+        })->name('events');
         Route::group(['prefix' => 'eventi/', 'as' => 'events.'], function () {
-            Route::post('event/edit/{id}', [EventController::class, 'modificaEvento'])->name('edit_save');
-            Route::post('event/insert', [EventController::class, 'inserisciEvento'])->name('insert_save');
-            Route::get('event/delete/{id}', [EventController::class, 'eliminaEvento'])->name('delete');
-            Route::get('event/delete_def/{id}', [EventController::class, 'eliminaDefinitivamenteEvento'])->name('definitely_delete');
-            Route::get('event/restore/{id}', [EventController::class, 'ripristinaEvento'])->name('restore_delete');
-
-            Route::get('all', function () {
+            Route::get('table', function () {
                 $events = Eventi::getEvents();
-                $eventsNext = Eventi::getEventsNext();
-                $eventsOld = Eventi::getEventsOld();
-                $jollyEvents = Eventi::getEventsJolly();
-                return view('ar/lv_a/event/events_display')
-                    ->with('events', $events)
-                    ->with('eventsNext', $eventsNext)
-                    ->with('eventsOld', $eventsOld)
-                    ->with('jollyEvents', $jollyEvents);
-            })->name('display');
-            Route::get('all_table', function () {
-                $events = Eventi::getEvents();
-                return view('ar/lv_a/event/events_listTable')
+                return view('ar/event/events_listTable')
                     ->with('events', $events);
             })->name('table');
-            Route::get('all_calendar', function () {
-                $data = Eventi::getEvents();
-                $dataEvent = array();
-                foreach ($data as $event) {
+
+            Route::get('calendar', function () {
+                $events = Eventi::getEvents();
+                $data = array();
+                foreach ($events as $event) {
                     if ($event->isJolly == "0")
-                        $dataEvent = array_merge($dataEvent,
+                        $data = array_merge($data,
                             array(['id' => $event->id,
                                 'title' => $event->titolo,
                                 'extra' => $event->extra,
@@ -129,95 +124,92 @@ Route::group(['prefix' => 'ar/', 'middleware' => ['auth', 'verified']], function
                                 'dateFull' => Carbon::parse($event->date)->format('d/m/Y'),
                                 'dateHour' => Carbon::parse($event->date)->format('H:i'),
                                 'discoteca' => $event->discoteca,
-                                'descrizione' => ($event->descrizione == null) ? 'Descrizione non aggiunta' : $event->descrizione,
+                                'descrizione' => $event->descrizione ?? 'Descrizione non aggiunta',
                                 'immagine' => $event->image,
                                 'allDay' => true])
                         );
                 }
-                $dataEvent = json_encode($dataEvent);
-                return view('ar/lv_a/event/events_calendar')
-                    ->with('data', $dataEvent)
-                    ->with('events', $data);
+                $data = json_encode($data);
+                return view('ar/event/events_calendar')
+                    ->with('data', $data)
+                    ->with('events', $events);
             })->name('calendar');
+
             Route::get('event/edit/{id}', function ($id) {
                 $data = Eventi::getEvento($id)->first();
-                if ($data === null) {
+                if (is_null($data)) {
                     return redirect()
-                        ->route('lv_a.events.display')
+                        ->route('events')
                         ->withErrors('L\'evento non esiste');
                 } else {
-                    return view('ar/lv_a/event/event_modify', ['id' => $id])
-                        ->with('data', $data);
+                    return view('ar/event/event_modify', ['id' => $id, 'data' => $data]);
                 }
             })->name('edit');
+
             Route::get('event/insert', function () {
-                return view('ar/lv_a/event/event_insert');
+                return view('ar/event/event_insert');
             })->name('insert');
+
             Route::get('event/deleted', function () {
                 $events = Eventi::getDeletedEvents();
-                return view('ar/lv_a/event/deleted_events_display')
+                return view('ar/event/deleted_events_display')
                     ->with('deletedEvents', $events);
             })->name('deleted');
         });
 
         //Gestione tavoli e classifica
-        Route::group(['prefix' => 'tavoli/', 'as' => 'tables.'], function () {
-            Route::post('insert', [TavoliController::class, 'inserisciTavolo'])->name('insert');
-            Route::post('update/{id}', [TavoliController::class, 'modificaTavolo'])->name('update');
-            Route::get('delete/{id}', [TavoliController::class, 'eliminaTavolo'])->name('delete');
-            Route::post('store_season', [TavoliController::class, 'chiudiStagione'])->name('store');
-
+        Route::get('tavoli', function () {
+            $table = Tavoli::getTavoli();
+            return view('ar/tavoli/all_table_display')
+                ->with('tables', $table);
+        })->name('tavoli');
+        Route::get('archivio', function () {
+            $result = DB::table('archivio_tavoli')->get()->values();
+            return view('ar/tavoli/archivio')
+                ->with('archivio', $result);
+        })->name('archivio');
+        Route::get('leaderboard', function () {
+            $result = Tavoli::query()
+                ->selectRaw('fattoDa, COUNT(*) as count')
+                ->groupBy('fattoDa')
+                ->orderBy('count', 'desc')
+                ->get()
+                ->values();
+            $date = DB::table('events')
+                ->orderBy('date', 'DESC')
+                ->where('date', '<=', date(now()))
+                ->first();
+            return view('ar/tavoli/leaderboard')
+                ->with('result', $result)
+                ->with('date', $date);
+        })->name('leaderboard');
+        Route::group(['prefix' => 'tavoli/', 'as' => 'tavoli.'], function () {
             Route::get('event/{id}', function ($id) {
                 $table = Tavoli::getTavoliForEvent($id);
                 $event = Eventi::getEvento($id)->first();
-                return view('ar/lv_a/tavoli/table_display')
+                return view('ar/tavoli/table_display')
                     ->with('event', $event)
                     ->with('tables', $table);
-            })->name('display_event');
-            Route::get('all', function () {
-                $table = Tavoli::getTavoli();
-                return view('ar/lv_a/tavoli/all_table_display')
-                    ->with('tables', $table);
-            })->name('display_all');
+            })->name('event');
             Route::post('filtered', function (TavoloSearchRequest $request) {
                 $result = Tavoli::searchTavolo($request)->values();
-                return view('ar/lv_a/tavoli/all_table_display')
+                return view('ar/tavoli/all_table_display')
                     ->with('tables', $result);
             })->name('search');
-            Route::get('archivio', function () {
-                $result = DB::table('archivio_tavoli')->get()->values();
-                return view('ar/lv_a/tavoli/archivio')
-                    ->with('archivio', $result);
-            })->name('archivio');
-            Route::get('leaderboard', function () {
-                $result = Tavoli::query()
-                    ->selectRaw('fattoDa, COUNT(*) as count')
-                    ->groupBy('fattoDa')
-                    ->orderBy('count', 'desc')
-                    ->get()
-                    ->values();
-                $date = DB::table('events')
-                    ->orderBy('date', 'DESC')
-                    ->where('date', '<=', date(now()))
-                    ->first();
-                return view('ar/lv_a/tavoli/leaderboard')
-                    ->with('result', $result)
-                    ->with('date', $date);
-            })->name('leaderboard');
         });
 
         //Gestione liste
-        Route::group(['prefix' => 'liste/', 'as' => 'lists.'], function () {
-            Route::get('all', function () {
-                $lists = Liste::getLists();
-                return view('ar/lv_a/liste/lists_rel_display')
-                    ->with('lists', $lists);
-            })->name('all');
+        Route::get('liste', function () {
+            $lists = Liste::getLists();
+            return view('ar/liste/lists_rel_display')
+                ->with('lists', $lists);
+        })->name('liste');
+        Route::group(['prefix' => 'liste/', 'as' => 'liste.'], function () {
             Route::get('event/{id}', function (int $id) {
                 $event = Eventi::getEvento($id)->first();
                 if ($event) {
                     $lists = Liste::getListByEventId($id);
-                    return view('ar/lv_a/liste/lists_rel_display_event')
+                    return view('ar/liste/lists_rel_display_event')
                         ->with('lists', $lists)
                         ->with('event', $event);
                 } else {
@@ -226,29 +218,20 @@ Route::group(['prefix' => 'ar/', 'middleware' => ['auth', 'verified']], function
             })->name('event');
             Route::post('search', function (ListeSearchRequest $request) {
                 $result = Liste::getListByEventId($request->evento)->values();
-                return view('ar/lv_a/liste/lists_rel_display')
+                return view('ar/liste/lists_rel_display')
                     ->with('lists', $result);
             })->name('search');
             Route::get('deleted', function () {
                 $lists = Liste::query()
                     ->where('deleted', true)
                     ->get();
-                return view('ar/lv_a/liste/deleted_lists_rel_display')
+                return view('ar/liste/deleted_lists_rel_display')
                     ->with('lists', $lists);
             })->name('deleted');
 
-            Route::post('insert', [ListeController::class, 'insert_lista'])->name('insert');
-            Route::post('edit/{id}', [ListeController::class, 'edit_lista'])->name('edit');
-            Route::get('delete/{id}', [ListeController::class, 'delete_lista'])->name('delete');
-            Route::get('restore/{id}', [ListeController::class, 'restore_lista'])->name('restore');
-            Route::get('def_delete/{id}', [ListeController::class, 'definitely_delete_lista'])->name('def_delete');
+
         });
     });
-
-//User
-    Route::get('ar/lv_u/dashboard', function () {
-        return view('ar/lv_u/dashboard');
-    })->name('lv_u.dashboard');
 
 //Gestione profilo personale
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');

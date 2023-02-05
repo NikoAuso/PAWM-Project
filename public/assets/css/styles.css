@@ -15,11 +15,7 @@ html {
 }
 body {
     position: relative;
-    background-image: url("../../assets/img/poster-vid.webp");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(116.82deg, #54A7FF 0%, #002144 100%);
 }
 
 /* Page other layout */

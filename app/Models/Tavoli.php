@@ -209,7 +209,7 @@ class Tavoli extends Model
                     'dettagli' => $details->dettagliChiusura
                 ]);
                 self::query()->truncate();
-                Log::info('Stagione ' . $details->stagione . ' chiusa. <a href="' . route('lv_a.tables.archivio') . '">Archivio</a> creato.');
+                Log::info('Stagione ' . $details->stagione . ' chiusa. <a href="' . route('archivio') . '">Archivio</a> creato.');
                 return true;
             } catch (Exception $e) {
                 return false;
@@ -265,7 +265,7 @@ class Tavoli extends Model
     {
         $file = $path . $name . '.pdf';
 
-        $pdf = PDF::loadView('ar/lv_a/tavoli/pdf/pdf_table', array(
+        $pdf = PDF::loadView('ar/tavoli/pdf/pdf_table', array(
             'tables' => $tables,
             'stagione' => $details->stagione
         ))->setPaper('A4', 'landscape');
@@ -288,7 +288,7 @@ class Tavoli extends Model
             ->orderBy('count', 'desc')
             ->get();
 
-        $pdf = PDF::loadView('ar/lv_a/tavoli/pdf/leaderboard', array(
+        $pdf = PDF::loadView('ar/tavoli/pdf/leaderboard', array(
             'tables' => $result,
             'stagione' => $details->stagione
         ))->setPaper('A4', 'landscape');
@@ -306,7 +306,7 @@ class Tavoli extends Model
         $evento = Eventi::getEvento($table->event_id)->first();
 
         Log::info('Tavolo ' . $operation . ': ' . $table->nome .
-            ' dell\'evento <a href="' . route('lv_a.events.edit', $table->event_id) . '">' . $evento->titolo .
+            ' dell\'evento <a href="' . route('events.edit', $table->event_id) . '">' . $evento->titolo .
             '</a> (' . Carbon::parse($evento->date)->format('d/m/Y') . ') ---> da: <a href="' .
             route('profile', Auth::id()) . '">' . Auth::user()->username . '</a>');
     }

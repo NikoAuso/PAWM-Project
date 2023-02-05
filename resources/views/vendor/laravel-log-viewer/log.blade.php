@@ -1,6 +1,6 @@
 @extends('ar.layouts.layout')
 
-@section('title', 'Admin | Logs')
+@section('title', 'AR | Logs')
 @section('link')
     <link href="{{asset('assets/bootstrap/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/bootstrap/css/responsive.bootstrap5.min.css')}}" rel="stylesheet">

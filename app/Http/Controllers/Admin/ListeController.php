@@ -67,7 +67,7 @@ class ListeController extends Controller
     public function restore_lista(int $id): RedirectResponse
     {
         $this->listModel->restore_lista($id);
-        return redirect()->route('lv_a.lists.deleted')
+        return redirect()->route('liste.deleted')
             ->with('message', 'Lista ripristinata');
     }
 
@@ -79,7 +79,7 @@ class ListeController extends Controller
     {
         $this->listModel->definitely_delete_lista($id);
 
-        return redirect()->route('lv_a.lists.deleted')
+        return redirect()->route('liste.deleted')
             ->with('message', 'Lista eliminata definitivamente');
     }
 }

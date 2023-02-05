@@ -82,9 +82,9 @@ class TavoliController extends Controller
                 ->back()
                 ->withErrors($msg);
         } else {
-            $msg = 'Tavoli eliminati e <a href="' . route('lv_a.tables.archivio') . '">archivio</a> creato.</a>';
+            $msg = 'Tavoli eliminati e <a href="' . route('archivio') . '">archivio</a> creato.</a>';
             return redirect()
-                ->route('lv_a.tables.display_all')
+                ->route('tavoli')
                 ->with(['message' => $msg]);
         }
     }

@@ -37,15 +37,16 @@ class UserController extends Controller
      * @param $page
      * @return RedirectResponse
      */
-    public function inserisciUtente(UserRequest $request, $page): RedirectResponse
+    public function create(UserRequest $request, $page): RedirectResponse
     {
-        $this->userModel->insertUser($request);
+        $this->userModel->create($request);
         $page_final = match ($page) {
-            'user' => 'lv_a.user.user',
-            'admin' => 'lv_a.user.admin'
+            'pr' => 'users.pr',
+            'admin' => 'users.admin'
         };
-        return redirect()->route($page_final)
-            ->with('message', 'Utente inserito. La password di default è impostata a "Mamateam2022!"');
+        return redirect()
+            ->route($page_final)
+            ->with('message', 'Utente inserito. La password di default è impostata a "Mamateam2023!"');
     }
 
     /**
@@ -56,16 +57,15 @@ class UserController extends Controller
      * @param $page
      * @return RedirectResponse
      */
-    public function modificaUtente(UserRequest $request, $id, $page): RedirectResponse
+    public function edit(UserRequest $request, $id, $page): RedirectResponse
     {
-        if ($id == 1 || $id == Auth::id())
-            return abort(401, 'Utente non modificabile');
-        $this->userModel->editUser($request, $id);
+        $this->userModel->edit($request, $id);
         $page_final = match ($page) {
-            'user' => 'lv_a.user.user',
-            'admin' => 'lv_a.user.admin'
+            'pr' => 'users.pr',
+            'admin' => 'users.admin'
         };
-        return redirect()->route($page_final)
+        return redirect()
+            ->route($page_final)
             ->with('message', 'Utente modificato');
     }
 
@@ -76,16 +76,16 @@ class UserController extends Controller
      * @param $page
      * @return RedirectResponse
      */
-    public function eliminaUtente($id, $page): RedirectResponse
+    public function delete($id, $page): RedirectResponse
     {
         $page_final = match ($page) {
-            'user' => 'lv_a.user.user',
-            'admin' => 'lv_a.user.admin'
+            'pr' => 'users.pr',
+            'admin' => 'users.admin'
         };
         if (User::query()->where('id', $id)->exists()) {
-            $this->userModel->deleteUser($id);
+            $this->userModel->uDelete($id);
             return redirect()->route($page_final)
-                ->with('message', 'Utente non più attivo');
+                ->with('message', 'Utente disattivato');
         } else {
             return redirect()->route($page_final)
                 ->withErrors('L\'utente non esiste');
@@ -98,14 +98,14 @@ class UserController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function eliminaDefinitivamenteUtente($id): RedirectResponse
+    public function defdelete($id): RedirectResponse
     {
         if (User::query()->where('id', $id)->exists()) {
-            $this->userModel->definitelyDeleteUser($id);
-            return redirect()->route('lv_a.user.deleted')
+            $this->userModel->defdelete($id);
+            return redirect()->route('users.deleted')
                 ->with('message', 'Utente eliminato definitivamente');
         } else {
-            return redirect()->route('lv_a.user.deleted')
+            return redirect()->route('users.deleted')
                 ->withErrors('L\'utente non esiste');
         }
     }
@@ -116,14 +116,14 @@ class UserController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function ripristinaUtente($id): RedirectResponse
+    public function restore($id): RedirectResponse
     {
         if (User::query()->where('id', $id)->exists()) {
-            $this->userModel->restoreUser($id);
-            return redirect()->route('lv_a.user.deleted')
+            $this->userModel->restore($id);
+            return redirect()->route('users.deleted')
                 ->with('message', 'Utente ripristinato');
         } else {
-            return redirect()->route('lv_a.user.deleted')
+            return redirect()->route('users.deleted')
                 ->withErrors('L\'utente non esiste');
         }
     }

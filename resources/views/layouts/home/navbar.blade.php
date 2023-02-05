@@ -50,21 +50,18 @@
                             />
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @can('isAdmin')
-                                <li><a class="dropdown-item" href="{{ route('lv_a.dashboard') }}">
-                                        {{ __('Dashboard') }}
-                                    </a></li>
-                            @endcan
-                            @can('isUser')
-                                <li><a class="dropdown-item" href="{{ route('lv_u.dashboard') }}">
-                                        {{ __('Dashboard') }}
-                                    </a></li>
-                            @endcan
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
+                            <li>
+                                <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                    {{ __('Dashboard') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                                    {{ __('Logout') }}
+                                </a>
+                            </li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>

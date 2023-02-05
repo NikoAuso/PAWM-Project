@@ -2,7 +2,7 @@
 @php use Carbon\Carbon; @endphp
 @extends('ar.layouts.layout')
 
-@section('title', 'Admin | Profilo')
+@section('title', 'AR | Profilo')
 @section('link')
     <link href="{{asset('assets/bootstrap/css/bootstrap-datepicker3.css')}}" rel="stylesheet">
     <link href="https://unpkg.com/dropzone/dist/dropzone.css" rel="stylesheet"/>

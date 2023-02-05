@@ -62,7 +62,7 @@
                                 <form class="form loginform" method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="form-label-group">
-                                        <input name="username" id="inputEmail" class="form-control" placeholder=" "
+                                        <input name="email" id="inputEmail" class="form-control" placeholder=" "
                                                type="text" value="{{ old('email') }}" autofocus required>
                                         <label for="inputEmail"><i class="fas fa-user"></i> {{ __('Username') }}</label>
                                     </div>

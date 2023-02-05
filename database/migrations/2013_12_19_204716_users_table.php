@@ -25,8 +25,7 @@ class UsersTable extends Migration
             $table->rememberToken()->nullable();
             $table->string('series_id')->nullable();
             $table->datetime('expires')->nullable();
-            $table->enum('role', ['admin', 'user'])->default('user');
-            $table->enum('team', ['Mamateam 2.0', 'Cantera'])->default('Mamateam 2.0');
+             $table->enum('team', ['Mamateam 2.0', 'Cantera'])->default('Mamateam 2.0');
             $table->string('avatar', 64)->default('profile-1.webp');
             $table->string('phone', 15)->nullable();
             $table->string('account_facebook', 50)->nullable();
@@ -36,7 +35,7 @@ class UsersTable extends Migration
             $table->datetime('lastaccess')->nullable();
             $table->boolean('active')->default(false);
             $table->boolean('deleted')->default(false);
-            $table->dateTime('created_at');
+            $table->timestamp('created_at');
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

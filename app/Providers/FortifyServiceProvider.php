@@ -2,11 +2,6 @@
 
 namespace App\Providers;
 
-use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
-use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Foundation\Application;
@@ -49,21 +44,21 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.forgetPassword');
+            return view('auth.forgot-password');
         });
 
         Fortify::resetPasswordView(function ($request) {
-            return view('auth.forgetPasswordLink', ['request' => $request]);
+            return view('auth.reset-password', ['request' => $request]);
         });
 
         Fortify::twoFactorChallengeView(function () {
             return view('auth.two-factor-challenge');
         });
 
-        Fortify::authenticateUsing(function (LoginRequest $request) {
+        Fortify::authenticateUsing(function (Request $request) {
             $user = User::query()
-                ->where('email', $request->username)
-                ->orWhere('username', $request->username)
+                ->where('email', $request->email)
+                ->orWhere('username', $request->email)
                 ->first();
 
             if ($user && Hash::check($request->password, $user->password)) {

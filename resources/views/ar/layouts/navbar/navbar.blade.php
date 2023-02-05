@@ -22,7 +22,7 @@
             <!-- Sidenav Menu Heading (Core)-->
             <div class="sidenav-menu-heading">Core</div>
             <!-- Sidenav Accordion (Dashboard)-->
-            <a class="nav-link" href="{{route('lv_a.dashboard')}}">
+            <a class="nav-link" href="{{route('dashboard')}}">
                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
                 Dashboard
             </a>
@@ -38,10 +38,10 @@
             </a>
             <div class="collapse" id="collapseUser" data-bs-parent="#accordionSidenav">
                 <nav class="sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{route('lv_a.user.admin')}}">Amministratori</a>
-                    <a class="nav-link" href="{{route('lv_a.user.user')}}">Pr semplici</a>
-                    <a class="nav-link" href="{{route('lv_a.user.insert', ['page' => 'user'])}}">Aggiungi nuovo</a>
-                    <a class="nav-link" href="{{route('lv_a.user.deleted')}}">Utenti eliminati</a>
+                    <a class="nav-link" href="{{route('users.admin')}}">Amministratori</a>
+                    <a class="nav-link" href="{{route('users.pr')}}">Pr semplici</a>
+                    <a class="nav-link" href="{{route('users.insert', ['page' => 'pr'])}}">Aggiungi nuovo</a>
+                    <a class="nav-link" href="{{route('users.deleted')}}">Utenti disattivati</a>
                 </nav>
             </div>
             <!-- Sidenav Accordion (Eventi)-->
@@ -53,9 +53,9 @@
             </a>
             <div class="collapse" id="collapseEvents" data-parent="#accordionSidenav">
                 <nav class="sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{route('lv_a.events.display')}}">Visualizza tutti</a>
-                    <a class="nav-link" href="{{route('lv_a.events.insert')}}">Aggiungi nuovo</a>
-                    <a class="nav-link" href="{{route('lv_a.events.deleted')}}">Eventi eliminati</a>
+                    <a class="nav-link" href="{{route('events')}}">Visualizza tutti</a>
+                    <a class="nav-link" href="{{route('events.insert')}}">Aggiungi nuovo</a>
+                    <a class="nav-link" href="{{route('events.deleted')}}">Eventi eliminati</a>
                 </nav>
             </div>
             <!-- Sidenav Accordion (Tavoli)-->
@@ -67,9 +67,9 @@
             </a>
             <div class="collapse" id="collapseTavoli" data-parent="#accordionSidenav">
                 <nav class="sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{route('lv_a.tables.display_all')}}">Cerca tutti</a>
-                    <a class="nav-link" href="{{route('lv_a.tables.leaderboard')}}">Classifica pr</a>
-                    <a class="nav-link" href="{{route('lv_a.tables.archivio')}}">Archivio tavoli</a>
+                    <a class="nav-link" href="{{route('tavoli')}}">Cerca tutti</a>
+                    <a class="nav-link" href="{{route('leaderboard')}}">Classifica pr</a>
+                    <a class="nav-link" href="{{route('archivio')}}">Archivio tavoli</a>
                 </nav>
             </div>
 
@@ -82,8 +82,8 @@
             </a>
             <div class="collapse" id="collapseListe" data-parent="#accordionSidenav">
                 <nav class="sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{route('lv_a.lists.all')}}">Tutte</a>
-                    <a class="nav-link" href="{{route('lv_a.lists.deleted')}}">Eliminate</a>
+                    <a class="nav-link" href="{{route('liste')}}">Tutte</a>
+                    <a class="nav-link" href="{{route('liste.deleted')}}">Eliminate</a>
                 </nav>
             </div>
             <!-- Sidenav Accordion (Galleria)
@@ -99,7 +99,7 @@
                 </nav>
             </div>-->
             <!-- Sidenav Accordion (Log)-->
-            <a class="nav-link" href="{{route('lv_a.logs')}}">
+            <a class="nav-link" href="{{route('logs')}}">
                 <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                 Logs
             </a>
@@ -116,7 +116,7 @@
             <div class="collapse" id="collapsePages" data-parent="#accordionSidenav">
                 <nav class="sidenav-menu-nested nav">
                     <a class="nav-link" href="{{route('home')}}" target="_blank">Homepage</a>
-                    <a class="nav-link" href="{{route('forget.password.get')}}" target="_blank">Password dimenticata</a>
+                    <a class="nav-link" href="{{route('password.update')}}" target="_blank">Password dimenticata</a>
                 </nav>
             </div>
         </div>

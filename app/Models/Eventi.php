@@ -68,7 +68,7 @@ class Eventi extends Model
      */
     public static function getEvents(): array|Collection
     {
-        return Eventi::query()
+        return self::query()
             ->where('deleted', false)
             ->orderBy('date', 'DESC')
             ->get();
@@ -81,7 +81,7 @@ class Eventi extends Model
      */
     public static function getDeletedEvents(): Collection|array
     {
-        return Eventi::query()
+        return self::query()
             ->where('deleted', true)
             ->orderBy('date', 'DESC')
             ->get();
@@ -94,7 +94,7 @@ class Eventi extends Model
      */
     public static function getEventsNext(): Collection|array
     {
-        return Eventi::query()
+        return self::query()
             ->where('date', '>', date("Y-m-d"))
             ->where('deleted', false)
             ->orderBy('date', 'ASC')
@@ -108,7 +108,7 @@ class Eventi extends Model
      */
     public static function getEventsOld(): Collection|array
     {
-        return Eventi::query()
+        return self::query()
             ->where('date', '<=', date("Y-m-d"))
             ->where('deleted', false)
             ->orderBy('date', 'DESC')
@@ -122,7 +122,7 @@ class Eventi extends Model
      */
     public static function getEventsJolly(): Collection|array
     {
-        return Eventi::query()
+        return self::query()
             ->where('isJolly', true)
             ->get();
     }
@@ -135,7 +135,7 @@ class Eventi extends Model
      */
     public static function getEvento(int $id): Collection|array
     {
-        return Eventi::query()
+        return self::query()
             ->where('id', $id)
             ->get();
     }
@@ -147,7 +147,7 @@ class Eventi extends Model
      * @param EventRequest $request
      * @return void
      */
-    public function inserisciEvento(EventRequest $request): void
+    public function create(EventRequest $request): void
     {
         $imageName = 'event_placeholder';
         if ($request->hasFile('image')) {
@@ -155,7 +155,7 @@ class Eventi extends Model
             $imageName = 'event_' . str_replace('.', '', microtime(true));
             Image::make($image)->encode('webp')->save(public_path() . '/assets/img/events/' . $imageName . '.webp');
         }
-        Eventi::query()
+        self::query()
             ->insert([
                 'image' => $imageName . '.webp',
                 'titolo' => $request->titolo,
@@ -168,14 +168,14 @@ class Eventi extends Model
                 'pagato' => $request->boolean('pagato'),
                 'isJolly' => $request->boolean('isJolly'),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'created_by' => Auth::user()->username,
-                'updated_by' => Auth::user()->username
+                'created_by' => Auth::id(),
+                'updated_by' => Auth::id()
             ]);
 
-        $id = Eventi::query()
+        $eventId = self::query()
             ->latest('id')
             ->first();
-        $this->logEventsDetails($id->id, 'inserito');
+        $this->logEventsDetails($eventId->id, 'inserito');
     }
 
     /**
@@ -186,22 +186,20 @@ class Eventi extends Model
      * @param int $id
      * @return void
      */
-    public function modificaEvento(EventRequest $request, int $id): void
+    public function edit(EventRequest $request, int $id): void
     {
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-
             $this->searchAndDeleteOldEventImage($id);
-
             $imageName = 'event_' . str_replace('.', '', microtime(true));
             Image::make($image)->encode('webp')->save(public_path() . '/assets/img/events/' . $imageName . '.webp');
-            Eventi::query()
+            self::query()
                 ->where('id', $id)
                 ->update([
                     'image' => $imageName . '.webp'
                 ]);
         }
-        Eventi::query()
+        self::query()
             ->where('id', $id)
             ->update([
                 'titolo' => $request->titolo,
@@ -225,9 +223,9 @@ class Eventi extends Model
      * @param int $id
      * @return void
      */
-    public function eliminaEvento(int $id): void
+    public function eDelete(int $id): void
     {
-        Eventi::query()
+        self::query()
             ->where('id', $id)
             ->update([
                 'deleted' => true
@@ -243,12 +241,12 @@ class Eventi extends Model
      * @param int $id
      * @return void
      */
-    public function deleteDefinitely(int $id): void
+    public function defdelete(int $id): void
     {
         $this->searchAndDeleteOldEventImage($id);
         $event = self::getEvento($id)->first();
-        $routeUser = route('lv_a.user.profile', Auth::id());
-        Eventi::query()
+        $routeUser = route('users.profile', Auth::id());
+        self::query()
             ->where('id', $id)
             ->delete();
 
@@ -262,9 +260,9 @@ class Eventi extends Model
      * @param int $id
      * @return void
      */
-    public function restoreEvent(int $id): void
+    public function restore(int $id): void
     {
-        Eventi::query()
+        self::query()
             ->where('id', $id)
             ->update([
                 'deleted' => false
@@ -298,10 +296,10 @@ class Eventi extends Model
      */
     public function logEventsDetails(int $eventId, string $operation): void
     {
-        $event = Eventi::getEvento($eventId)->first();
+        $event = self::getEvento($eventId)->first();
 
-        $routeEvents = route('lv_a.events.edit', $event->id);
-        $routeUser = route('lv_a.user.profile', Auth::id());
+        $routeEvents = route('events.edit', $event->id);
+        $routeUser = route('user.profile', Auth::id());
 
         Log::info('Evento ' . $operation . ': <a href="' . $routeEvents . '">' . $event->titolo . '</a> --> da: <a href="' . $routeUser . '">' . Auth::user()->username . '</a>');
     }

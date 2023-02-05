@@ -36,11 +36,6 @@
                          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="3000">
                 </div>
             </div>
-            <video id="videoIntro" class="filter" autoplay loop muted preload="auto">
-                <source src="{{asset('assets/vid/videoplayback.mp4')}}" type="video/mp4">
-                <source src="{{asset('assets/vid/videoplayback.webm')}}" type="video/webm">
-                <source src="{{asset('assets/vid/videoplayback.ogg')}}" type="video/ogg">
-            </video>
         </div>
     </div>
 

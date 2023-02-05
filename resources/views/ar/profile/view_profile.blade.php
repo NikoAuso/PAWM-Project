@@ -1,7 +1,7 @@
 @php use Carbon\Carbon; @endphp
 @extends('ar.layouts.layout')
 
-@section('title', 'Admin | Profilo Utente')
+@section('title', 'AR | Profilo Utente')
 @section('content')
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-xl px-4">
@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-auto align-items-right mb-3">
                         <a class="btn btn-sm btn-light text-primary"
-                           href="{{route('lv_a.user.edit', ['id' => $user->id, 'page' => $user->role])}}">
+                           href="{{route('users.edit', ['id' => $user->id, 'page' => $user->role])}}">
                             <i class="me-1" data-feather="edit"></i>
                             Modifica
                         </a>
