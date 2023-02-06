@@ -31,9 +31,9 @@ class ListeController extends Controller
      * @param ListeRequest $request
      * @return RedirectResponse
      */
-    public function insert_lista(ListeRequest $request): RedirectResponse
+    public function create(ListeRequest $request): RedirectResponse
     {
-        $this->listModel->insert_lista($request);
+        $this->listModel->create($request);
         return redirect()->back()
             ->with('message', 'Lista aggiunta');
     }
@@ -42,9 +42,9 @@ class ListeController extends Controller
      * @param ListeRequest $request
      * @return RedirectResponse
      */
-    public function edit_lista(ListeRequest $request): RedirectResponse
+    public function edit(ListeRequest $request): RedirectResponse
     {
-        $this->listModel->edit_lista($request);
+        $this->listModel->edit($request);
         return redirect()->back()
             ->with('message', 'Lista modificata');
     }
@@ -53,33 +53,10 @@ class ListeController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function delete_lista(int $id): RedirectResponse
+    public function delete(int $id): RedirectResponse
     {
-        $this->listModel->delete_lista($id);
+        $this->listModel->lDelete($id);
         return redirect()->back()
             ->with('message', 'Lista eliminata');
-    }
-
-    /**
-     * @param int $id
-     * @return RedirectResponse
-     */
-    public function restore_lista(int $id): RedirectResponse
-    {
-        $this->listModel->restore_lista($id);
-        return redirect()->route('liste.deleted')
-            ->with('message', 'Lista ripristinata');
-    }
-
-    /**
-     * @param int $id
-     * @return RedirectResponse
-     */
-    public function definitely_delete_lista(int $id): RedirectResponse
-    {
-        $this->listModel->definitely_delete_lista($id);
-
-        return redirect()->route('liste.deleted')
-            ->with('message', 'Lista eliminata definitivamente');
     }
 }

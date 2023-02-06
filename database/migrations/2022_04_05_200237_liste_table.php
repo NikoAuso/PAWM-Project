@@ -22,7 +22,6 @@ class ListeTable extends Migration
             $table->integer('quantity');
             $table->integer('entered');
             $table->foreignId('fatto_da');
-            $table->boolean('deleted')->default(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->foreignId('created_by');
             $table->foreign('event_id')->references('id')->on('events')->onUpdate('cascade')->onDelete('no action');

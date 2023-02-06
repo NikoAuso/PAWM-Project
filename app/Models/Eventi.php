@@ -211,7 +211,7 @@ class Eventi extends Model
                 'pagato' => $request->boolean('pagato'),
                 'active' => $request->boolean('active'),
                 'isJolly' => $request->boolean('isJolly'),
-                'updated_by' => Auth::user()->username
+                'updated_by' => Auth::id()
             ]);
         $this->logEventsDetails($id, 'modificato');
     }
@@ -299,7 +299,7 @@ class Eventi extends Model
         $event = self::getEvento($eventId)->first();
 
         $routeEvents = route('events.edit', $event->id);
-        $routeUser = route('user.profile', Auth::id());
+        $routeUser = route('users.profile', Auth::id());
 
         Log::info('Evento ' . $operation . ': <a href="' . $routeEvents . '">' . $event->titolo . '</a> --> da: <a href="' . $routeUser . '">' . Auth::user()->username . '</a>');
     }

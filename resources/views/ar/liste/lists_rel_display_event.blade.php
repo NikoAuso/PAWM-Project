@@ -24,7 +24,7 @@
                         <button class="btn btn-sm btn-light text-primary insert-btn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#insert-list-modal"
-                                data-link="{{route('liste.insert')}}"
+                                data-link="{{route('create-lista')}}"
                                 data-event="{{$event->id}}">
                             <i class="me-1" data-feather="plus"></i>
                             Aggiungi nuova
@@ -77,7 +77,7 @@
                                                     <a class="btn btn-success mb-2 edit-btn"
                                                        data-bs-toggle="modal"
                                                        data-bs-target="#edit-modal"
-                                                       data-link="{{route('liste.edit', $list->list_id)}}"
+                                                       data-link="{{route('edit-lista', $list->list_id)}}"
                                                        data-id="{{$list->list_id}}"
                                                        data-name="{{$list->name}}"
                                                        data-surname="{{$list->surname}}"
@@ -88,7 +88,7 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <a class="btn btn-danger mb-2 delete-btn"
-                                                       data-link="{{route('liste.delete', $list->list_id)}}"
+                                                       data-link="{{route('delete-lista', $list->list_id)}}"
                                                        data-descrizione="Vuoi eliminare la lista <strong>{{$list->name}} {{$list->surname}}</strong>?"
                                                        data-bs-toggle="modal"
                                                        data-bs-target="#delete-modal"

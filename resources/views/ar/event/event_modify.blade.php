@@ -62,8 +62,7 @@
                                  src="{{asset('assets/img/events').'/'.$data->image}}"
                                  alt="Immagine di copertina dell'evento" id="output">
                             <!-- Profile picture help block-->
-                            <div class="small font-italic text-muted mb-0">Se possibile carica la copertina facebook
-                                dell'evento
+                            <div class="small font-italic text-muted mb-0">Carica la copertina Instagram dell'evento
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="customFile"></label>

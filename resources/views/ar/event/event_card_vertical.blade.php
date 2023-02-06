@@ -75,7 +75,7 @@
                 </span>
                 <br/>
                 <span>
-                    <small class="text-muted">{{$event->updated_by}}</small>
+                    <small class="text-muted">{{\App\Models\User::getUserById($event->updated_by)->first()->username}}</small>
                 </span>
                 <br/>
                 <span>

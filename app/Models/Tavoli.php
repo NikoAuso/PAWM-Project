@@ -106,8 +106,8 @@ class Tavoli extends Model
                 'dettagli' => $request->dettagli,
                 'fattoDa' => $request->fattoDa,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'created_by' => Auth::user()->username,
-                'updated_by' => Auth::user()->username
+                'created_by' => Auth::id(),
+                'updated_by' => Auth::id()
             ]);
         $tavolo = self::query()
             ->latest('id')
@@ -131,7 +131,7 @@ class Tavoli extends Model
                 'etaMedia' => $request->etaMedia,
                 'dettagli' => $request->dettagli,
                 'fattoDa' => $request->fattoDa,
-                'updated_by' => Auth::user()->username
+                'updated_by' => Auth::id()
             ]);
         $tavolo = self::getTavoloById($id)
             ->first();
@@ -193,7 +193,7 @@ class Tavoli extends Model
     {
         $tables = self::all()->values();
         $filename = 'tavoli-stagione-' . str_replace([' ', '/'], '-', strtolower($details->stagione));
-        $path = $_SERVER['DOCUMENT_ROOT'] . '/../public/assets/archivio/';
+        $path = asset('assets/archivio/');
 
         $this->createCSVFile($tables, $filename, $path);
         $this->createPDFFile($tables, $details, $filename, $path);
@@ -231,6 +231,8 @@ class Tavoli extends Model
         header('Pragma: no-cache');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Expires: 0');
+
+        dd($path.$filename);
 
         $handle = fopen($path . $filename . '.csv', 'w');
 

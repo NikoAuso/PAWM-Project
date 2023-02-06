@@ -87,38 +87,45 @@
                             <div class="row gx-3">
                                 <!-- Form Group (roles)-->
                                 <div class="col-md-4 mb-3">
-                                    <label class="small mb-1" for="inputRoles">Ruolo</label>
-                                    <select name="role" class="form-select text-capitalize" id="inputRoles" required>
-                                        <option value=""></option>
-                                        <?php
-                                        $opt_arr = \Spatie\Permission\Models\Role::all();
-                                        foreach ($opt_arr as $opt) {
-                                            if ($opt->name == $data->getRoleNames()->get(0)) {
-                                                $sel = 'selected';
-                                            } else {
-                                                $sel = '';
-                                            }
-                                            echo '<option class="text-capitalize" value="' . $opt->name . '"' . $sel . '>' . $opt->name . '</option>';
-                                        }
-                                        ?>
-                                    </select>
+                                    @can('super-admin')
+                                        <label class="small mb-1" for="inputRoles">Ruolo</label>
+                                        <select name="role" class="form-select text-capitalize" id="inputRoles"
+                                                required>
+                                            <option value=""></option>
+                                                <?php
+                                                $opt_arr = \Spatie\Permission\Models\Role::all();
+                                                foreach ($opt_arr as $opt) {
+                                                    if ($opt->name == $data->getRoleNames()->get(0)) {
+                                                        $sel = 'selected';
+                                                    } else {
+                                                        $sel = '';
+                                                    }
+                                                    echo '<option class="text-capitalize" value="' . $opt->name . '"' . $sel . '>' . $opt->name . '</option>';
+                                                }
+                                                ?>
+                                        </select>
+                                    @else
+                                        <label class="small mb-1" for="inputRoles">Ruolo</label>
+                                        <input class="form-control text-capitalize" id="inputRoles" disabled
+                                               placeholder="{{$page}}">
+                                    @endcan
                                 </div>
                                 <!-- Form Group (team)-->
                                 <div class="col-md-4 mb-3">
                                     <label class="small mb-1" for="inputTeam">Team</label>
                                     <select name="team" class="form-select text-capitalize" id="inputTeam" required>
                                         <option value=""></option>
-                                        <?php
-                                        $opt_arr = ['Mamateam 2.0', 'Cantera'];
-                                        foreach ($opt_arr as $opt) {
-                                            if ($opt == $data->team) {
-                                                $sel = 'selected';
-                                            } else {
-                                                $sel = '';
+                                            <?php
+                                            $opt_arr = ['Mamateam 2.0', 'Cantera'];
+                                            foreach ($opt_arr as $opt) {
+                                                if ($opt == $data->team) {
+                                                    $sel = 'selected';
+                                                } else {
+                                                    $sel = '';
+                                                }
+                                                echo '<option class="text-capitalize" value="' . $opt . '"' . $sel . '>' . $opt . '</option>';
                                             }
-                                            echo '<option class="text-capitalize" value="' . $opt . '"' . $sel . '>' . $opt . '</option>';
-                                        }
-                                        ?>
+                                            ?>
                                     </select>
                                 </div>
                                 <!-- Form Check (evento attivo)-->

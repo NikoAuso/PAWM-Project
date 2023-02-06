@@ -182,7 +182,7 @@
                                 <div class="col-md-4 mb-3">
                                     <label class="small mb-1" for="inputRuolo">Ruolo</label>
                                     <input class="form-control text-capitalize" id="inputRuolo" type="text"
-                                           value="{{Auth::user()->role}}" disabled placeholder="">
+                                           value="{{Auth::user()->getRoleNames()->get(0)}}" disabled placeholder="">
                                 </div>
                                 <!-- Form Group (Team)-->
                                 <div class="col-md-4 mb-3">

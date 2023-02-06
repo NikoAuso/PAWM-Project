@@ -64,7 +64,6 @@ class Liste extends Model
             ->join('events as events', 'events.id', '=', 'liste.event_id')
             ->where('events.deleted', false)
             ->where('events.isJolly', false)
-            ->where('liste.deleted', false)
             ->orderBy('events.date', 'desc')
             ->get();
     }
@@ -82,7 +81,6 @@ class Liste extends Model
             ->where('event_id', $id)
             ->where('events.deleted', false)
             ->where('events.isJolly', false)
-            ->where('liste.deleted', false)
             ->orderBy('liste.surname', 'asc')
             ->get();
     }
@@ -91,7 +89,7 @@ class Liste extends Model
      * @param ListeRequest $request
      * @return void
      */
-    public function insert_lista(ListeRequest $request): void
+    public function create(ListeRequest $request): void
     {
         $request->validate([
             'event_id' => 'required',
@@ -117,7 +115,7 @@ class Liste extends Model
      * @param ListeRequest $request
      * @return void
      */
-    public function edit_lista(ListeRequest $request): void
+    public function edit(ListeRequest $request): void
     {
         Liste::query()
             ->where('list_id', $request->list_id)
@@ -134,33 +132,7 @@ class Liste extends Model
      * @param int $id
      * @return void
      */
-    public function delete_lista(int $id): void
-    {
-        Liste::query()
-            ->where('list_id', $id)
-            ->update([
-                'deleted' => true
-            ]);
-    }
-
-    /**
-     * @param int $id
-     * @return void
-     */
-    public function restore_lista(int $id): void
-    {
-        Liste::query()
-            ->where('list_id', $id)
-            ->update([
-                'deleted' => false
-            ]);
-    }
-
-    /**
-     * @param int $id
-     * @return void
-     */
-    public function definitely_delete_lista(int $id): void
+    public function lDelete(int $id): void
     {
         Liste::query()
             ->where('list_id', $id)

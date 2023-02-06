@@ -49,7 +49,7 @@
                     </div>
                     <div class="row g-0" style="position: absolute; bottom: 0" id="data_modified">
                         <div>
-                            <p class="text-muted">Modificato: {{$event->updated_by}}
+                            <p class="text-muted">Modificato: {{\App\Models\User::getUserById($event->updated_by)->first()->username}}
                                 - {{Carbon::parse($event->updated_at)->formatLocalized('%e/%m/%Y %H:%M')}}</p>
                         </div>
                     </div>

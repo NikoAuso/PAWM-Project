@@ -61,13 +61,13 @@
                                         <div class="btn-group" role="group">
                                             <a href="#" class="btn btn-success delete_btn" data-bs-toggle="modal"
                                                data-bs-target="#confirm-delete"
-                                               data-link="{{route('events.restore_delete', ['id' => $event->id])}}"
+                                               data-link="{{route('restore-event', ['id' => $event->id])}}"
                                                data-descrizione="Vuoi ripristinare l'evento <strong>{{$event->titolo}}</strong>?">
                                                 <i class="fas fa-trash-restore"></i>
                                             </a>
                                             <a href="#" class="btn btn-danger delete_btn" data-bs-toggle="modal"
                                                data-bs-target="#confirm-delete"
-                                               data-link="{{route('events.definitely_delete', [$event->id])}}"
+                                               data-link="{{route('definitely-delete-event', [$event->id])}}"
                                                data-descrizione="Sei sicuro di voler eliminare <strong>DEFINITIVAMENTE</strong>
                                                                     l'evento <strong>{{$event->titolo}}</strong>?">
                                                 <i class="fas fa-times"></i>
@@ -121,7 +121,23 @@
                 paging: true,
                 info: true,
                 searching: true,
-                ordering: false
+                ordering: false,
+                columns: [
+                    {orderable: true},
+                    null,
+                    {orderable: false},
+                    null,
+                    {orderable: false},
+                    {orderable: false}
+                ],
+                columnDefs: [
+                    {responsivePriority: 1, targets: 0},
+                    {responsivePriority: 2, targets: 1},
+                    {responsivePriority: 3, targets: 5},
+                    {responsivePriority: 4, targets: 2},
+                    {responsivePriority: 5, targets: 3},
+                    {responsivePriority: 6, targets: 4},
+                ]
             });
             $(document).on('click', '.delete_btn', function () {
                 let link = $(this).data('link');

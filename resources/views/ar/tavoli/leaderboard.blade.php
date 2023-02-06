@@ -50,7 +50,7 @@
                                     @if($data->fattoDa == "ACCOUNT ONELOVE")
                                         @php($data = null)
                                     @endif
-                                    @php($user = (new \App\Models\User)->getUserByUsername($data->fattoDa)->values()->get(0))
+                                    @php($user = (new \App\Models\User)->getUserById($data->fattoDa)->values()->get(0))
                                     <tr>
                                         <td>{{$c++}}</td>
                                         <td>{{$user->name}}</td>
