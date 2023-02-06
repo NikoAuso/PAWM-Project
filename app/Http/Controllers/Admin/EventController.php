@@ -92,11 +92,12 @@ class EventController extends Controller
      */
     public function defdelete(int $id): RedirectResponse
     {
-        if (is_null(Eventi::getEvento($id)->first()))
+        $event = Eventi::getEvento($id)->first();
+        if (is_null($event))
             return redirect()
                 ->route('events')
                 ->withErrors('L\'evento non esiste');
-        elseif (!Eventi::getEvento($id)->first()->deleted)
+        elseif (!$event->deleted)
             return redirect()
                 ->route('events')
                 ->withErrors('Impossibile eliminare definitivamente l\'evento. L\'evento non è mai stato "eliminato"');
@@ -117,11 +118,11 @@ class EventController extends Controller
     {
         if (Eventi::getEvento($id)->first() === null)
             return redirect()
-                ->route('events.display')
+                ->route('events')
                 ->withErrors('L\'evento non esiste');
         elseif (Eventi::getEvento($id)->first()->deleted === 0)
             return redirect()
-                ->route('events.display')
+                ->route('events')
                 ->withErrors('Impossibile ripristinare definitivamente l\'evento. L\'evento non è mai stato eliminato');
         $this->eventModel->restore($id);
         return redirect()->route('events.deleted')

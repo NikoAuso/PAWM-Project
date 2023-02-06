@@ -44,7 +44,7 @@
 
                                 $opt_arr = DB::table('users')->get();
                                 foreach ($opt_arr as $opt) {
-                                    echo '<option value="' . $opt->username . '">' . $opt->username . ' - ' . $opt->name . ' ' . $opt->surname . '</option>';
+                                    echo '<option value="' . $opt->id . '">' . $opt->username . ' - ' . $opt->name . ' ' . $opt->surname . '</option>';
                                 } ?>
                             </datalist>
                             <label for="inputEvento"></label>
@@ -97,8 +97,8 @@
                                 @if(count($tables))
                                     @php ($c = 1)
                                     @foreach($tables as $table)
-                                        @php($result = Eventi::getEvento($table->event_id)->first())
-                                        @php($user = DB::table('users')->select('name', 'surname')->where('username', $table->fattoDa)->first())
+                                        @php($result = \App\Models\Eventi::getEvento($table->event_id)->first())
+                                        @php($user = DB::table('users')->select('name', 'surname')->where('id', $table->fattoDa)->first())
                                         <tr>
                                             <td>{{$c++}}</td>
                                             <td class="text-uppercase">{{$table->nome}}</td>
@@ -230,7 +230,7 @@
                 <!-- Tabella tavoli con bottoni -->
             </div>
         </div>
-        @if(basename(url()->current()) != 'filtered')
+        {{--@if(basename(url()->current()) != 'filtered')
             <div class="row">
                 <div class="col-md-12">
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -239,7 +239,7 @@
                     </button>
                 </div>
             </div>
-        @endif
+        @endif--}}
     </div>
 @endsection
 @section('scripts')
@@ -267,7 +267,7 @@
             </div>
         </div>
     </div>
-    <!-- Chiusura Stagione Modal -->
+   {{-- <!-- Chiusura Stagione Modal -->
     <div class="modal fade" id="storeTableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="exampleModalLabel" aria-hidden="true" data-current-step="1">
         <div class="modal-dialog modal-dialog-centered">
@@ -304,7 +304,6 @@
                                 </div>
                             </div>
                         </fieldset>
-
                         <fieldset data-step="3">
                             <div class="form-group row">
                                 <div class="col-sm-12 vstack gap-2">
@@ -334,7 +333,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div>--}}
     <!-- Page level plugins -->
     <script type="text/javascript" src="{{asset('assets/bootstrap/js/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/bootstrap/js/dataTables.bootstrap5.min.js')}}"></script>

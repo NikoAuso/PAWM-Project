@@ -23,9 +23,16 @@ class TableRolesSeeder extends Seeder
         Permission::create(['name' => 'manage-liste']);
         Permission::create(['name' => 'manage-tavoli']);
 
+        $superAdminRole = Role::create(['name' => 'super-admin']);
         $adminRole = Role::create(['name' => 'admin']);
         $editorRole = Role::create(['name' => 'pr']);
 
+        $superAdminRole->givePermissionTo([
+            'manage-users',
+            'manage-events',
+            'manage-liste',
+            'manage-tavoli'
+        ]);
         $adminRole->givePermissionTo([
             'manage-users',
             'manage-events',

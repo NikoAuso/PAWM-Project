@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-auto align-items-right mb-3">
                         <a class="btn btn-sm btn-light text-primary"
-                           href="{{route('users.edit', ['id' => $user->id, 'page' => $user->role])}}">
+                           href="{{route('users.edit', ['id' => $user->id, 'page' => $user->getRoleNames()->get(0)])}}">
                             <i class="me-1" data-feather="edit"></i>
                             Modifica
                         </a>
@@ -117,7 +117,7 @@
                             <!-- Form Group (ruolo)-->
                             <div class="col-md-4 mb-3">
                                 <label class="small mb-1" for="inputRuolo">Ruolo</label>
-                                <div class="form-control text-capitalize" id="inputRuolo" readonly>{{$user->role}}
+                                <div class="form-control text-capitalize" id="inputRuolo" readonly>{{$user->getRoleNames()->get(0)}}
                                     &nbsp;
                                 </div>
                             </div>

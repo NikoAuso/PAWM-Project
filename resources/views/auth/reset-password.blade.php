@@ -61,8 +61,8 @@
                                 <h3 class="login-heading mb-4">Resetta la tua password</h3>
                                 <form action="{{ route('password.update') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="token" value="{{ $token }}">
-                                    <input type="hidden" name="email" value="{{ $email }}">
+                                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                                    <input type="hidden" name="email" value="{{ $request->email }}">
 
                                     <div class="form-label-group">
                                         <input type="password" id="password" class="form-control" name="password"

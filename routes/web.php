@@ -221,19 +221,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 return view('ar/liste/lists_rel_display')
                     ->with('lists', $result);
             })->name('search');
-            Route::get('deleted', function () {
-                $lists = Liste::query()
-                    ->where('deleted', true)
-                    ->get();
-                return view('ar/liste/deleted_lists_rel_display')
-                    ->with('lists', $lists);
-            })->name('deleted');
-
-
         });
     });
 
-//Gestione profilo personale
+    //Gestione profilo personale
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile/update-profile', [ProfileController::class, 'modifyData'])->name('profile_update');
     Route::post('profile/update-social', [ProfileController::class, 'modifyDataSocial'])->name('profile_update_social');

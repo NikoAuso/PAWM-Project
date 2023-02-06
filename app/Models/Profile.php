@@ -96,7 +96,7 @@ class Profile extends Model
      * @param $request
      * @return void
      */
-    public function updateProfile($request)
+    public function updateProfile($request): void
     {
         $request->validate([
             'username' => 'required|min:1|string',
@@ -116,8 +116,7 @@ class Profile extends Model
                 'email' => $request->email,
                 'address' => $request->address,
                 'birthday' => Carbon::createFromFormat('d/m/Y', $request->birthday)->format('Y-m-d'),
-                'phone' => $request->phone,
-                'updated_by' => Auth::user()->username
+                'phone' => $request->phone
             ]);
     }
 
@@ -125,7 +124,7 @@ class Profile extends Model
      * @param $request
      * @return void
      */
-    public function updateProfileSocial($request)
+    public function updateProfileSocial($request): void
     {
         $request->validate([
             'account_facebook' => 'nullable|url',
@@ -136,7 +135,7 @@ class Profile extends Model
             ->update([
                 'account_facebook' => $request->account_facebook,
                 'account_instagram' => $request->account_instagram,
-                'updated_by' => Auth::user()->username
+                'updated_by' => Auth::id()
             ]);
     }
 
@@ -144,7 +143,7 @@ class Profile extends Model
      * @param $request
      * @return void
      */
-    public function modifyPassword($request)
+    public function modifyPassword($request): void
     {
         $request->validate([
             'old_password' => 'required|min:8|max:50|string',

@@ -83,7 +83,6 @@
             <div class="collapse" id="collapseListe" data-parent="#accordionSidenav">
                 <nav class="sidenav-menu-nested nav">
                     <a class="nav-link" href="{{route('liste')}}">Tutte</a>
-                    <a class="nav-link" href="{{route('liste.deleted')}}">Eliminate</a>
                 </nav>
             </div>
             <!-- Sidenav Accordion (Galleria)
