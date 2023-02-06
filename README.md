@@ -194,15 +194,15 @@ Infine, per avviare il server di sviluppo integrato di Laravel, eseguire il coma
 e cliccare sul link mostrato nel terminale.
 
 ## Screenshot
-![Homepage - 1](/repo-img/homepage1.png)
-![Homepage - 2](/repo-img/homepage2.png)
+![Homepage - 1](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Homepage1.png)
+![Homepage - 2](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Homepage2.png)
 
-![Dashboard](/repo-img/dashboard.png)
-![Utenti](/repo-img/utenti.png)
-![Eventi](/repo-img/eventi.png)
-![Tavoli](/repo-img/tavoli.png)
-![Liste](/repo-img/liste.png)
-![Logs](/repo-img/logs.png)
+![Dashboard](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Dashboard.png)
+![Utenti](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Utenti.png)
+![Eventi](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Eventi.png)
+![Tavoli](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Tavoli.png)
+![Liste](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Liste.png)
+![Logs](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Logs.png)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
