@@ -26,6 +26,7 @@
     <div class="container-xl px-4 mt-5">
         <div class="row">
             <div class="col-xl-12 col-sm-12 mb-12">
+                @role('admin')
                 <!-- Form ricerca tavoli -->
                 <form class="form mb-4 mt-2" action="{{route('tavoli.search')}}" method="post"
                       enctype="multipart/form-data">
@@ -38,11 +39,7 @@
                             <datalist id="browser">
                                 <option value=""></option>
                                 <?php
-
-                                use Carbon\Carbon;
-                                use Illuminate\Support\Facades\DB;
-
-                                $opt_arr = DB::table('users')->get();
+                                $opt_arr = \Illuminate\Support\Facades\DB::table('users')->get();
                                 foreach ($opt_arr as $opt) {
                                     echo '<option value="' . $opt->id . '">' . $opt->username . ' - ' . $opt->name . ' ' . $opt->surname . '</option>';
                                 } ?>
@@ -53,9 +50,9 @@
                             <datalist id="browser2">
                                 <option value=""></option>
                                 <?php
-                                $opt_arr = DB::table('events')->orderBy('date', 'desc')->get();
+                                $opt_arr = \Illuminate\Support\Facades\DB::table('events')->orderBy('date', 'desc')->get();
                                 foreach ($opt_arr as $opt) {
-                                    echo '<option value="' . $opt->id . '">' . $opt->titolo . ' - ' . $opt->discoteca . ' ' . Carbon::parse($opt->date)->format('d/m/Y') . '</option>';
+                                    echo '<option value="' . $opt->id . '">' . $opt->titolo . ' - ' . $opt->discoteca . ' ' . \Carbon\Carbon::parse($opt->date)->format('d/m/Y') . '</option>';
                                 } ?>
                             </datalist>
                             <button class="btn btn-primary" type="submit">
@@ -67,6 +64,7 @@
                         </div>
                     </div>
                 </form>
+                @endrole
                 <!-- Tabella tavoli con bottoni -->
                 <div class="card card-waves mb-4 mt-2">
                     <div class="card-header">
@@ -98,7 +96,7 @@
                                     @php ($c = 1)
                                     @foreach($tables as $table)
                                         @php($result = \App\Models\Eventi::getEvento($table->event_id)->first())
-                                        @php($user = DB::table('users')->select('name', 'surname')->where('id', $table->fattoDa)->first())
+                                        @php($user = \Illuminate\Support\Facades\DB::table('users')->select('name', 'surname')->where('id', $table->fattoDa)->first())
                                         <tr>
                                             <td>{{$c++}}</td>
                                             <td class="text-uppercase">{{$table->nome}}</td>
@@ -267,73 +265,73 @@
             </div>
         </div>
     </div>
-   {{-- <!-- Chiusura Stagione Modal -->
-    <div class="modal fade" id="storeTableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="exampleModalLabel" aria-hidden="true" data-current-step="1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <form class="form" id="closingSeason" method="post" action="{{route('store')}}"
-                      enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-header">
-                        <h5>Chiusura tavoli stagione</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <fieldset data-step="1">
-                            <span>State per <strong>chiudere la stagione</strong> passata e tutti i relativi tavoli.
-                                Procedendo tutti i tavoli verranno rimossi e salvati in un file che sarà disponibile
-                                nella sezione <strong><em>Archivio tavoli</em></strong>.
-                            </span>
-                        </fieldset>
-                        <fieldset data-step="2">
-                            <div class="form-group row mb-3">
-                                <div class="col-sm-12">
-                                    <label class="form-label" for="stagione">Inserisci il nome della stagione
-                                        passata</label>
-                                    <input type="text" id="stagione" name="stagione" class="form-control"
-                                           placeholder='Es. "Inverno 2022/23"' required/>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <div class="col-sm-12">
-                                    <label class="form-label" for="dettagli">Inserisci dettagli</label>
-                                    <textarea id="dettagli" name="dettagliChiusura" class="form-control"
-                                              placeholder='Inserisci dei dettagli della stagione (es. "Dal 01/01 al 31/07").'
-                                              style="height: 100px"></textarea>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset data-step="3">
-                            <div class="form-group row">
-                                <div class="col-sm-12 vstack gap-2">
-                                    <ul class="list-group">
-                                        <li class="list-group-item"><p>Stagione: <strong id="season"></strong></p></li>
-                                        <li class="list-group-item"><p>Numeri tavoli:
-                                                <strong>{{$tables->count()}}</strong></p>
-                                        </li>
-                                        <li class="list-group-item"><p>Dettagli: <strong id="details"></strong></p></li>
-                                    </ul>
-                                    <strong>Sei sicuro di voler procedere?</strong>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="prev" class="btn btn-secondary" data-step-to="prev">
-                            Precedente
-                        </button>
-                        <button type="button" id="button" class="btn btn-success" data-step-to="next">
-                            Prossimo
-                        </button>
-                        <button type="submit" id="procedi" class="btn btn-info">
-                            Procedi
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>--}}
+    {{-- <!-- Chiusura Stagione Modal -->
+     <div class="modal fade" id="storeTableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="exampleModalLabel" aria-hidden="true" data-current-step="1">
+         <div class="modal-dialog modal-dialog-centered">
+             <div class="modal-content">
+                 <form class="form" id="closingSeason" method="post" action="{{route('store')}}"
+                       enctype="multipart/form-data">
+                     @csrf
+                     <div class="modal-header">
+                         <h5>Chiusura tavoli stagione</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <fieldset data-step="1">
+                             <span>State per <strong>chiudere la stagione</strong> passata e tutti i relativi tavoli.
+                                 Procedendo tutti i tavoli verranno rimossi e salvati in un file che sarà disponibile
+                                 nella sezione <strong><em>Archivio tavoli</em></strong>.
+                             </span>
+                         </fieldset>
+                         <fieldset data-step="2">
+                             <div class="form-group row mb-3">
+                                 <div class="col-sm-12">
+                                     <label class="form-label" for="stagione">Inserisci il nome della stagione
+                                         passata</label>
+                                     <input type="text" id="stagione" name="stagione" class="form-control"
+                                            placeholder='Es. "Inverno 2022/23"' required/>
+                                 </div>
+                             </div>
+                             <div class="form-group row mb-3">
+                                 <div class="col-sm-12">
+                                     <label class="form-label" for="dettagli">Inserisci dettagli</label>
+                                     <textarea id="dettagli" name="dettagliChiusura" class="form-control"
+                                               placeholder='Inserisci dei dettagli della stagione (es. "Dal 01/01 al 31/07").'
+                                               style="height: 100px"></textarea>
+                                 </div>
+                             </div>
+                         </fieldset>
+                         <fieldset data-step="3">
+                             <div class="form-group row">
+                                 <div class="col-sm-12 vstack gap-2">
+                                     <ul class="list-group">
+                                         <li class="list-group-item"><p>Stagione: <strong id="season"></strong></p></li>
+                                         <li class="list-group-item"><p>Numeri tavoli:
+                                                 <strong>{{$tables->count()}}</strong></p>
+                                         </li>
+                                         <li class="list-group-item"><p>Dettagli: <strong id="details"></strong></p></li>
+                                     </ul>
+                                     <strong>Sei sicuro di voler procedere?</strong>
+                                 </div>
+                             </div>
+                         </fieldset>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" id="prev" class="btn btn-secondary" data-step-to="prev">
+                             Precedente
+                         </button>
+                         <button type="button" id="button" class="btn btn-success" data-step-to="next">
+                             Prossimo
+                         </button>
+                         <button type="submit" id="procedi" class="btn btn-info">
+                             Procedi
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>--}}
     <!-- Page level plugins -->
     <script type="text/javascript" src="{{asset('assets/bootstrap/js/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/bootstrap/js/dataTables.bootstrap5.min.js')}}"></script>

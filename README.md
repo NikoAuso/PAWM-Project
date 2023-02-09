@@ -9,7 +9,7 @@
     <img src="public/assets/img/Logo_Mamateam_Dopestaff.png" alt="Logo" width="80" height="80">
   </a>
 
-<h1 align="center">MAMATEAM</h3>
+<h1 align="center">MAMATEAM</h1>
 </div>
 
 
@@ -146,7 +146,7 @@ Nell'area riservata, l'utente registrato potrà, a seconda del ruolo, interagire
 
 > Il progetto è ancora in fase di sviluppo. Nei prossimi aggiornamenti vorrei inserire innanzitutto una nuova grafica
 > per la homepage di cui ho già
-> un [concept]([https://www.figma.com/file/sA1yHloOcHvikVttXss01T/Landing-page---Desktop-view?node-id=0%3A1&t=dGKsDrhWZfrQG9GI-1](https://www.figma.com/file/sA1yHloOcHvikVttXss01T/Landing-page---Desktop-view?node-id=0%3A1&t=hvOWr0eSrRxKHOkA-1)). 
+> un [concept](https://www.figma.com/file/sA1yHloOcHvikVttXss01T/Landing-page---Desktop-view?node-id=0%3A1&t=hvOWr0eSrRxKHOkA-1). 
 
 ## Prerequisiti
 

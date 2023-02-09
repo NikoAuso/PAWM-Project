@@ -9,6 +9,9 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * This is the controller that manage the home page of the website.
@@ -46,18 +49,29 @@ class DashboardController extends Controller
         $this->listeModel = new Liste();
         $this->tavoliModel = new Tavoli();
     }
-    public function index(): Factory|View|Application
+    public function index(): Application|Factory|View|RedirectResponse
     {
-        $data = [
-            'allUser' => $this->userModel->all()->count(),
-            'inactiveUser' => $this->userModel->getInactiveUsers()->count(),
-            'allEvents' => $this->eventModel->all()->count(),
-            'deletedEvents' => $this->eventModel->getDeletedEvents()->count(),
-            'allListe' => $this->listeModel->all()->count(),
-            'allTavoli' => $this->tavoliModel->all()->count()
-        ];
-        return view('ar/dashboard')
-            ->with($data);
+        if(Auth::user()->role('admin')) {
+            $data = [
+                'allUser' => $this->userModel->all()->count(),
+                'inactiveUser' => $this->userModel->getInactiveUsers()->count(),
+                'allEvents' => $this->eventModel->all()->count(),
+                'deletedEvents' => $this->eventModel->getDeletedEvents()->count(),
+                'allListe' => $this->listeModel->all()->count(),
+                'allTavoli' => $this->tavoliModel->all()->count()
+            ];
+            return view('ar/dashboard-admin')
+                ->with($data);
+        }elseif (Auth::user()->role('pr')){
+            $data = [
+                'liste' => $this->listeModel->all()->count(),
+                'allTavoli' => $this->tavoliModel->all()->count()
+            ];
+            return view('ar/dashboard-user')
+                ->with($data);
+        }else{
+            return redirect()->back()->withErrors('Errore generico');
+        }
     }
 
 }

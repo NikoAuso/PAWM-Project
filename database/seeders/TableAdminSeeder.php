@@ -16,12 +16,12 @@ class TableAdminSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            'name' => fake()->firstName(),
-            'surname' => fake()->lastName(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => 'Nicolò',
+            'surname' => 'Ausili',
+            'email' => 'nicolo.ausili@studenti.unicam.it',
             'email_verified_at' => null,
-            'username' => 'Admin',
-            'password' => Hash::make('password'),
+            'username' => 'NikoAuso',
+            'password' => Hash::make('12345678'),
             'active' => 1,
             'created_at' => now()
         ];

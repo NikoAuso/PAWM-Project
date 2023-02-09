@@ -27,6 +27,6 @@ class TableUsersSeeder extends Seeder
                 'created_at' => now()
             ];
         $user = User::query()->create($data);
-        $user->assignRole('PR');
+        $user->assignRole('pr');
     }
 }

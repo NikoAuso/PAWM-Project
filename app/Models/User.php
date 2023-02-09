@@ -112,30 +112,8 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return array|Collection|null
-     */
-    public static function getPRUser(): Collection|array|null
-    {
-        return self::query()
-            ->role('pr')
-            ->where('deleted', false)
-            ->orderBy('username', 'ASC')
-            ->get();
-    }
-
-    /**
-     * @return array|Collection|null
-     */
-    public static function getAdminUser(): Collection|array|null
-    {
-        return self::query()
-            ->role('admin')
-            ->where('deleted', false)
-            ->orderBy('username', 'ASC')
-            ->get();
-    }
-
-    /**
+     * Return an array of the inactive users
+     *
      * @return Collection|array
      */
     public static function getInactiveUsers(): Collection|array
@@ -145,15 +123,8 @@ class User extends Authenticatable
     }
 
     /**
-     * @return array|Collection
-     */
-    public static function getDeletedUsers(): array|Collection
-    {
-        return self::all()
-            ->where('deleted', true);
-    }
-
-    /**
+     * Return a user by his ID
+     *
      * @param int $id
      * @return array|Collection
      */
@@ -164,6 +135,8 @@ class User extends Authenticatable
     }
 
     /**
+     * Return a user by his username
+     *
      * @param string $username
      * @return Collection|array
      */
@@ -174,6 +147,8 @@ class User extends Authenticatable
     }
 
     /**
+     * Create a user
+     *
      * @param UserRequest $request
      * @return void
      */
@@ -194,6 +169,8 @@ class User extends Authenticatable
     }
 
     /**
+     * Edit a user
+     *
      * @param UserRequest $request
      * @param int $id
      * @return void
@@ -215,20 +192,23 @@ class User extends Authenticatable
     }
 
     /**
+     * Create a user
+     *
      * @param int $id
      * @return void
      */
-    public function uDelete(int $id): void
+    public function deactivateUser(int $id): void
     {
         self::query()
             ->where('id', $id)
             ->update([
                 'active' => false,
-                'deleted' => true
             ]);
     }
 
     /**
+     * Create a user
+     *
      * @param int $id
      * @return void
      */
@@ -240,16 +220,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Create a user
+     *
      * @param int $id
      * @return void
      */
-    public function restore(int $id): void
+    public function reactivateUser(int $id): void
     {
         self::query()
             ->where('id', $id)
             ->update([
-                'active' => false,
-                'deleted' => false
+                'active' => true
             ]);
     }
 

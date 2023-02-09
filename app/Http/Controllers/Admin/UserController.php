@@ -83,7 +83,7 @@ class UserController extends Controller
             'admin' => 'users.admin'
         };
         if (User::query()->where('id', $id)->exists()) {
-            $this->userModel->uDelete($id);
+            $this->userModel->deactivateUser($id);
             return redirect()->route($page_final)
                 ->with('message', 'Utente disattivato');
         } else {
@@ -119,7 +119,7 @@ class UserController extends Controller
     public function restore($id): RedirectResponse
     {
         if (User::query()->where('id', $id)->exists()) {
-            $this->userModel->restore($id);
+            $this->userModel->reactivateUser($id);
             return redirect()->route('users.deleted')
                 ->with('message', 'Utente ripristinato');
         } else {

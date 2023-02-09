@@ -113,7 +113,7 @@
                     <img class="dropdown-user-img" src="{{asset('assets/img/avatar')}}/{{Auth::user()->avatar}}" alt="avatar di {{Auth::user()->username}}"/>
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">{{Auth::user()->name}} {{Auth::user()->surname}}</div>
-                        <div class="dropdown-user-details-email">{{Auth::user()->email}}</div>
+                        <div class="dropdown-user-details-email text-capitalize">{{Auth::user()->getRoleNames()->get(0)}}</div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>

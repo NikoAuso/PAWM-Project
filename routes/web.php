@@ -14,6 +14,7 @@ use App\Models\Liste;
 use App\Models\Tavoli;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
@@ -38,14 +39,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //Admin
-    Route::group(['middleware' => ['role:admin|super-admin']], function () {
+    Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin/'], function () {
         //Logs
         Route::get('logs', [LogViewerController::class, 'index'])->name('logs');
 
         Route::group(['prefix' => 'utenti/', 'as' => 'users.'], function () {
             Route::get('pr', function () {
                 $data = [
-                    'users' => User::getPRUser()->values(),
+                    'users' => User::role('pr')->get(),
                     'title' => 'PR'
                 ];
                 return view('ar/users/users_display')->with($data);
@@ -53,7 +54,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('admin', function () {
                 $data = [
-                    'users' => User::getAdminUser()->values(),
+                    'users' => User::role('admin')->get(),
                     'title' => 'Admin'
                 ];
                 return view('ar/users/users_display')->with($data);
@@ -61,7 +62,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('deleted', function () {
                 $data = [
-                    'users' => User::getDeletedUsers()->values(),
+                    'users' => User::getInactiveUsers()->values(),
                     'title' => 'PR eliminati'
                 ];
                 return view('ar/users/deleted_users_display')->with($data);
@@ -222,6 +223,39 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                     ->with('lists', $result);
             })->name('search');
         });
+    });
+
+    //Pr
+    Route::group(['middleware' => ['role:pr'], 'prefix' => 'pr/'], function () {
+        //Gestione tavoli e classifica
+        Route::get('tavoli', function () {
+            $table = Tavoli::getTavoloByUser(Auth::id());
+            return view('ar/tavoli/all_table_display')
+                ->with('tables', $table);
+        })->name('tavoli_pr');
+
+        Route::get('leaderboard', function () {
+            $result = Tavoli::query()
+                ->selectRaw('fattoDa, COUNT(*) as count')
+                ->groupBy('fattoDa')
+                ->orderBy('count', 'desc')
+                ->get()
+                ->values();
+            $date = DB::table('events')
+                ->orderBy('date', 'DESC')
+                ->where('date', '<=', date(now()))
+                ->first();
+            return view('ar/tavoli/leaderboard')
+                ->with('result', $result)
+                ->with('date', $date);
+        })->name('leaderboard_pr');
+
+        //Gestione liste
+        Route::get('liste', function () {
+            $lists = Liste::getLists();
+            return view('ar/liste/lists_rel_display')
+                ->with('lists', $lists);
+        })->name('liste_pr');
     });
 
     //Gestione profilo personale

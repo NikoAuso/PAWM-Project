@@ -69,10 +69,10 @@ class Tavoli extends Model
 
     /**
      *
-     * @param $eventId
+     * @param int $eventId
      * @return array|Collection
      */
-    public static function getTavoliForEvent($eventId): array|Collection
+    public static function getTavoliForEvent(int $eventId): array|Collection
     {
         return self::query()
             ->where('event_id', $eventId)
@@ -81,13 +81,25 @@ class Tavoli extends Model
 
     /**
      *
-     * @param $id
+     * @param int $id
      * @return array|Collection
      */
-    public static function getTavoloById($id): array|Collection
+    public static function getTavoloById(int $id): array|Collection
     {
         return self::query()
             ->where('id', $id)
+            ->get();
+    }
+
+    /**
+     *
+     * @param int $user_id
+     * @return array|Collection
+     */
+    public static function getTavoloByUser(int $user_id): array|Collection
+    {
+        return self::query()
+            ->where('id', $user_id)
             ->get();
     }
 

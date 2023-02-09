@@ -34,7 +34,6 @@ class UsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->datetime('lastaccess')->nullable();
             $table->boolean('active')->default(false);
-            $table->boolean('deleted')->default(false);
             $table->datetime('created_at');
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

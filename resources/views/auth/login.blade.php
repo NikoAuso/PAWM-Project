@@ -1,124 +1,95 @@
 @extends('layouts.layouts')
 
 @section('title')
-    Mamateam/Celeste - Area riservata
+    Mamateam/Celeste - Accedi
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{asset('assets/css/login.style.css')}}">
-    <link rel="stylesheet" href="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.css"/>
+    <link rel="stylesheet" href="{{asset('assets/bootstrap/css/sb-admin-pro.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+            crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
-    <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" id="navbar">
-        <!-- Container wrapper -->
-        <div class="container">
-            <!-- Navbar brand -->
-            <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Mamateam') }}</a>
-            <!-- Toggle button -->
-            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left links -->
-                <ul class="navbar-nav ms-auto align-items-right">
-                    <li class="nav-item">
-                        <a class="nav-link active mx-2" aria-current="page"
-                           href="{{route('home')}}"><span>Home</span></a>
-                    </li>
-                    <li class="nav-item ms-1">
-                        <a class="btn btn-primary btn-rounded" role="button"
-                           href="{{route('login')}}">Login</a>
-                    </li>
-                </ul>
-                <!-- Left links -->
-            </div>
-            <!-- Collapsible wrapper -->
-        </div>
-        <!-- Container wrapper -->
-    </nav>
-
-    <div class="container-fluid">
-        <div class="row no-gutter">
-            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-            <div class="col-md-8 col-lg-6">
-                <div class="login d-flex align-items-center">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-9 col-lg-8 mx-auto">
-                                <h3 class="login-heading mb-4">Entra nella tua area riservata!</h3>
-                                <form class="form loginform" method="POST" action="{{ route('login') }}">
-                                    @csrf
-                                    <div class="form-label-group">
-                                        <input name="email" id="inputEmail" class="form-control" placeholder=" "
-                                               type="text" value="{{ old('email') }}" autofocus required>
-                                        <label for="inputEmail"><i class="fas fa-user"></i> {{ __('Username') }}</label>
+    <body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container-xl px-4">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <!-- Basic login form-->
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header justify-content-center"><h3 class="fw-light my-4">Login</h3>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Login form-->
+                                    <form class="form" method="POST" action="{{ route('login') }}">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputEmail"><i
+                                                    class="fas fa-user"></i> {{ __('Username') }}
+                                            </label>
+                                            <input name="email" id="inputEmail" class="form-control" placeholder=" "
+                                                   type="text" value="{{ old('email') }}" autofocus required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputPassword"><i
+                                                    class="fas fa-lock"></i> {{ __('Password') }}
+                                            </label>
+                                            <input type="password" name="password" id="inputPassword"
+                                                   class="form-control"
+                                                   placeholder=" " required autocomplete="current-password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" id="rememberPasswordCheck"
+                                                       type="checkbox"
+                                                       name="remember">
+                                                <label class="form-check-label"
+                                                       for="rememberPasswordCheck">{{ __('Ricordati di me') }}</label>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
+                                            type="submit" name="login_btn">Entra
+                                        </button>
+                                    </form>
+                                    @if (session('status'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('status') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                    @if($errors->any())
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{$errors->first()}}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="card-footer text-center">
+                                    <div class="small">
+                                        <a class="mb-2" href="{{route('password.request')}}">Password dimenticata?</a>
                                     </div>
-                                    <div class="form-label-group">
-                                        <input type="password" name="password" id="inputPassword" class="form-control"
-                                               placeholder=" " required autocomplete="current-password">
-                                        <label for="inputPassword"><i class="fas fa-lock"></i> {{ __('Password') }}
-                                        </label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" name="remember" class="custom-control-input"
-                                               id="exampleCheck1">
-                                        <label class="custom-control-label"
-                                               for="exampleCheck1">{{ __('Ricordati di me') }}</label>
-                                    </div>
-                                    <br>
-                                    <button
-                                        class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
-                                        type="submit" name="login_btn">Entra
-                                    </button>
-                                    <div class="text-center mb-3 mt-3">
-                                        <a class="mb-2" href="{{route('password.request')}}">Password
-                                            dimenticata?</a>
-                                    </div>
-                                </form>
-                                @if (session('status'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        {{ session('status') }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                    </div>
-                                @endif
-                                @if($errors->any())
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        {{$errors->first()}}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                    </div>
-                                @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
     </body>
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
             crossorigin="anonymous"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
-    <script type="text/javascript" src="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.js" defer></script>
+    <script type="text/javascript" src="{{asset('assets/bootstrap/js/sb-admin-pro.js')}}"></script>
 @endsection

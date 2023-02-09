@@ -27,54 +27,13 @@
                             <div class="col-xl-8 col-xxl-8">
                                 <div class="text-left text-xl-start text-xxl-left mb-4 mb-xl-0 mb-xxl-4">
                                     <h1 class="text-primary">Benvenuti nell'area riservata!</h1>
-                                    <p class="text-gray-700 mb-0">Novità dell'aggiornamento {{config('app.version')}}</p>
-                                    <ul>
-                                        <li>Gestione liste</li>
-                                        <li>Gestione membri delle liste</li>
-                                        <li>Risoluzione bug</li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-xxl-4 text-center">
-                                <img class="img-fluid" src="{{asset('assets/img/illustrations/at-work.svg')}}" style="max-width: 26rem"  alt=""/>
+                                <img class="img-fluid" src="{{asset('assets/img/illustrations/at-work.svg')}}"
+                                     style="max-width: 26rem" alt=""/>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3 col-lg-6">
-                <div class="card bg-primary text-white mb-4">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="mr-3">
-                                <div class="text-white-75 small">Utenti</div>
-                                <div class="text-lg font-weight-bold">{{$allUser}} Pr registrati</div>
-                                <div class="text-lg font-weight-bold">{{$inactiveUser}} Pr non attivi</div>
-                            </div>
-                            <i class="fa fa-users fa-5x"></i>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{route('users.pr')}}">Vedi dettagli</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3 col-lg-6">
-                <div class="card bg-warning text-white mb-4">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="mr-3">
-                                <div class="text-white-75 small">Eventi</div>
-                                <div class="text-lg font-weight-bold">{{$allEvents}} Eventi</div>
-                                <div class="text-lg font-weight-bold">{{$deletedEvents}} Eliminati</div>
-                            </div>
-                            <i class="fa fa-table fa-5x"></i>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{route('events')}}">Vedi dettagli</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
