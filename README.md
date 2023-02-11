@@ -195,15 +195,15 @@ Infine, per avviare il server di sviluppo integrato di Laravel, eseguire il coma
 e cliccare sul link mostrato nel terminale.
 
 ## Screenshot
-![Homepage - 1](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Homepage1.png)
-![Homepage - 2](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Homepage2.png)
+![Homepage - 1](public/assets/img/screenshots/Homepage1.png)
+![Homepage - 2](public/assets/img/screenshots/Homepage2.png)
 
-![Dashboard](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Dashboard.png)
-![Utenti](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Utenti.png)
-![Eventi](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Eventi.png)
-![Tavoli](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Tavoli.png)
-![Liste](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Liste.png)
-![Logs](https://github.com/NikoAuso/PAWM-Project/blob/master/repo-img/Logs.png)
+![Dashboard](public/assets/img/screenshots/Dashboard.png)
+![Utenti](public/assets/img/screenshots/Utenti.png)
+![Eventi](public/assets/img/screenshots/Eventi.png)
+![Tavoli](public/assets/img/screenshots/Tavoli.png)
+![Liste](public/assets/img/screenshots/iste.png)
+![Logs](public/assets/img/screenshots/Logs.png)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
