@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a href="https://mamateamceleste.it">
-    <img src="public/assets/img/Logo_Mamateam_Dopestaff.png" alt="Logo" width="80" height="80">
+    <img src="public/assets/img/logo.png" alt="Logo" width="100" height="100">
   </a>
 
 <h1 align="center">MAMATEAM</h1>

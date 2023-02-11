@@ -1,6 +1,6 @@
 @extends('errors::layout')
 
-@section('title', __('Not Found'))
+@section('title', __('Non trovato'))
 
 @section('code', '404')
 

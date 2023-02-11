@@ -18,7 +18,7 @@ class TableAdminSeeder extends Seeder
         $data = [
             'name' => 'Nicolò',
             'surname' => 'Ausili',
-            'email' => 'nicolo.ausili@studenti.unicam.it',
+            'email' => 'nikoauso@gmail.com',
             'email_verified_at' => null,
             'username' => 'NikoAuso',
             'password' => Hash::make('12345678'),

@@ -100,14 +100,15 @@
                                                     } else {
                                                         $sel = '';
                                                     }
-                                                    echo '<option class="text-capitalize" value="' . $opt->name . '"' . $sel . '>' . $opt->name . '</option>';
+                                                    echo '<option class="text-capitalize" value="' . $opt . '"' . $sel . '>' . $opt->name . '</option>';
                                                 }
                                                 ?>
                                         </select>
                                     @else
                                         <label class="small mb-1" for="inputRoles">Ruolo</label>
-                                        <input class="form-control text-capitalize" id="inputRoles" disabled
-                                               placeholder="{{$page}}">
+                                        <input class="form-control text-capitalize" id="inputRoles" readonly
+                                               placeholder="{{$data->getRoleNames()->get(0)}}" name="role"
+                                               value="{{$data->getRoleNames()->get(0)}}">
                                     @endcan
                                 </div>
                                 <!-- Form Group (team)-->

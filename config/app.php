@@ -199,6 +199,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Ladumor\LaravelPwa\PWAServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -267,6 +268,7 @@ return [
         'Eventi' => App\Models\Eventi::class,
         'Tavoli' => App\Models\Tavoli::class,
         'Liste' => App\Models\Liste::class,
-        'Carbon' => Carbon\Carbon::class
+        'Carbon' => Carbon\Carbon::class,
+        'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
     ])->toArray(),
 ];

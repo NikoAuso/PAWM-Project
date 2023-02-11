@@ -1,6 +1,6 @@
 @extends('errors::layout')
 
-@section('title', __('Server Error'))
+@section('title', __('Errore del server'))
 
 @section('code', '500')
 

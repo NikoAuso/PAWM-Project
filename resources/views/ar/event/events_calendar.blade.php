@@ -2,7 +2,7 @@
 
 @section('title', 'AR | Eventi')
 @section('link')
-    <link href="{{asset('assets/fullcalendar/lib/main.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/fullcalendar/main.css')}}" rel="stylesheet">
     <style>
         @media (max-width: 1200px) {
             #calendarBtn {
@@ -105,8 +105,8 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="{{asset('assets/fullcalendar/lib/main.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/fullcalendar/lib/locales-all.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/fullcalendar/main.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/fullcalendar/locales-all.js')}}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const calendarEl = document.getElementById('calendar');

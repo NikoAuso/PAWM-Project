@@ -27,12 +27,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
-            public function toResponse($request): Redirector|Application|RedirectResponse
-            {
-                return redirect('/');
-            }
-        });
+        //
     }
 
     /**
@@ -81,7 +76,6 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
-
             return Limit::perMinute(5)->by($email.$request->ip());
         });
 

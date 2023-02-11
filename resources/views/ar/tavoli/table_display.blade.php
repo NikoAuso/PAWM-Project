@@ -321,7 +321,7 @@
                 }
 
                 let dataImage = "";
-                toDataURL('{{asset('assets/img/logo-footer.png')}}', function (dataUrl) {
+                toDataURL('{{asset('assets/img/logo.png')}}', function (dataUrl) {
                     dataImage = dataUrl;
                 });
 

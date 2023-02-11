@@ -31,6 +31,8 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-JJ6B3FWZQE');
+
+
     </script>
     <!-- end of Google Analytics-->
 
@@ -55,28 +57,23 @@
     <title>@yield('title')</title>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('site.webmanifest')}}">
-    <link rel="mask-icon" href="{{asset('safari-pinned-tab.svg')}}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" href="{{'/favicon.ico'}}" type="image/x-icon">
 
     <!-- Styles -->
     <link href="{{asset('assets/bootstrap/css/sb-admin-pro.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+            crossorigin="anonymous"></script>
 </head>
 <body class="bg-white">
 <div id="layoutError">
     <div id="layoutError_content">
         <main>
-            <div class="container-xl px-4">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="text-center" style="top: 50%; transform: translateY(50%)">
+            <div class="container px-4">
+                <div class="row align-items-center" style="top: 50%; transform: translateY(30%)">
+                    <div class="col-xl-6 offset-xl-3">
+                        <div class="text-center mt-4">
                             <img class="img-fluid p-4" src="{{asset('assets/img/error/')}}/@yield('image')"
                                  alt="@yield('title')"/>
                             <p class="lead">@yield('message')</p>
@@ -93,17 +90,21 @@
     <div id="layoutError_footer">
         <footer class="footer-admin mt-auto footer-light">
             <div class="container-xl px-4">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 small text-center">Copyright &#169; {{date("Y")}}</div>
+                <div class="row">
+                    <div class="col-xl-6 offset-xl-3 small text-center">Copyright &#169; {{date("Y")}}</div>
                 </div>
             </div>
         </footer>
     </div>
 </div>
 <!-- Scripts-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('assets/bootstrap/js/sb-admin-pro.js')}}"></script>
+<script type="text/javascript" src="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.js" defer></script>
 </body>
 </html>

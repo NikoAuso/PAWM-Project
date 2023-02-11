@@ -76,7 +76,7 @@
         <!-- Section: footer image -->
         <section class="mb-4">
             <div class="text-center footer-img">
-                <img class="img-fluid" src="{{asset('assets/img/logo-footer.png')}}" style="height: 100px;"
+                <img class="img-fluid" src="{{asset('assets/img/logo.png')}}" style="height: 100px;"
                      alt="logo completo" loading="lazy"/>
             </div>
         </section>

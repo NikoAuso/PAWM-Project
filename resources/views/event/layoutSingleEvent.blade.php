@@ -35,6 +35,8 @@
 
 
 
+
+
     </script>
     <!-- end of Google Analytics-->
 
@@ -59,13 +61,7 @@
     <title>@yield('title')</title>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('site.webmanifest')}}">
-    <link rel="mask-icon" href="{{asset('safari-pinned-tab.svg')}}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" href="{{'/favicon.ico'}}" type="image/x-icon">
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -78,13 +74,7 @@
 
     <style>
         .back-image {
-            background-image: url('@yield('image')');
-            background-position: center;
-            background-repeat: no-repeat;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+            background-color: #65a3ff;
             z-index: 0;
 
             /* Set rules to fill background */
@@ -115,8 +105,9 @@
 @yield('content')
 
 <!-- JQuery core JavaScript-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script type="text/javascript" src="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.js" defer></script>
@@ -125,31 +116,28 @@
 <script type="text/javascript">
     AOS.init();
     $(document).ready(function () {
+        $('body').addClass('loaded');
         setTimeout(function () {
-            $('body').addClass('loaded');
-            setTimeout(function () {
-                $('#navbar').css('display', 'block');
-            }, 800);
-        }, 3000);
-        $('.back-image').height($(window).height());
+            $('#navbar').css('display', 'block');
+        }, 800);
 
         // Set the date we're counting down to
-        var countDownDate = new Date("{{Carbon::parse($event->date)->format('F d, Y H:i:s')}}").getTime();
+        let countDownDate = new Date("{{Carbon::parse($event->date)->format('F d, Y H:i:s')}}").getTime();
 
-        // Update the count down every 1 second
-        var x = setInterval(function () {
+        // Update the count-down every 1 second
+        let x = setInterval(function () {
 
             // Get today's date and time
-            var now = new Date().getTime();
+            let now = new Date().getTime();
 
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
+            // Find the distance between now and the count-down date
+            let distance = countDownDate - now;
 
             // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result in the element with id="demo"
             document.getElementById("countdown").innerHTML =
@@ -165,7 +153,7 @@
                 "<div>" +
                 "<span>sec</span>" + seconds +
                 "</div>";
-            // If the count down is finished, write some text
+            // If the count-down is finished, write some text
             if (distance < 0) {
                 clearInterval(x);
                 document.getElementById("countdown").innerHTML = "<div class='countdown-expired'>EVENTO PASSATO</div>";

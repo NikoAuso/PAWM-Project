@@ -207,12 +207,12 @@
 
 .flipTimer .digit.active .digit-bottom {
     z-index: 2;
-    -webkit-transform-origin: 50% 0%;
+    -webkit-transform-origin: 50% 0;
     -webkit-animation: flipBottom 0.3s 0.3s ease-out both;
     -moz-transform-origin: 50% 0%;
     -moz-animation: flipBottom 0.3s 0.3s ease-out both;
     -ms-transform-origin: 50% 0%;
     -ms-animation: flipBottom 0.3s 0.3s ease-out both;
-    transform-origin: 50% 0%;
+    transform-origin: 50% 0;
     animation: flipBottom 0.3s 0.3s ease-out both;
 }

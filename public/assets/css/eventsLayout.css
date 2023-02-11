@@ -306,7 +306,7 @@ body {
         margin-top: 15px;
     }
     #countdown div > span {
-        padding-bottom: 0px;
+        padding-bottom: 0;
         font-size: 13px;
     }
 }
@@ -322,7 +322,7 @@ body {
         margin-top: 15px;
     }
     #countdown div > span {
-        padding-bottom: 0px;
+        padding-bottom: 0;
         font-size: 13px;
     }
 }

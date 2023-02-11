@@ -22,19 +22,16 @@
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
     </div>
-    @include('layouts.home.navbar')
+    @include('layouts.navbar')
 
     <!-- Video Background -->
-    <div id="videoContainer">
-        <div
-            class="container-fluid d-flex justify-content-center align-items-center align-content-center video-parallax-container"
-            id="home">
-            <div class="row">
-                <div class="col-12">
-                    <img id="logoImg" class="img-fluid" src="{{asset('assets/img/logo.png')}}"
-                         alt="logo"
-                         data-aos="fade-down" data-aos-duration="1000" data-aos-delay="3000">
-                </div>
+    <div class="container-fluid d-flex justify-content-center align-items-center align-content-center"
+         id="home" style="height: 100vh;overflow: hidden;">
+        <div class="row">
+            <div class="col-12">
+                <img id="logoImg" class="img-fluid" src="{{asset('assets/img/logo.png')}}"
+                     alt="logo"
+                     data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000">
             </div>
         </div>
     </div>
@@ -46,19 +43,6 @@
         @include('layouts.home.history')
 
         @include('layouts.home.team')
-
-        <div style="height: 25vh"></div>
-
-        <!-- Galleria
-        <div class="container" id="galleria">
-            <div class="col-sm-12">
-                <h2 class="title text-center" data-aos="fade-down" data-aos-delay="200" data-aos-duration="700">GALLERIA</h2>
-                <div id="showcase" class="noselect" data-aos="zoom-down" data-aos-delay="400" data-aos-duration="700"></div>
-                <p id="item-title" data-aos="zoom-down" data-aos-delay="400" data-aos-duration="700"></p>
-            </div>
-        </div>-->
-
-        <div class="clearfix"></div>
 
         @include('layouts.home.footer')
     </div>
@@ -76,21 +60,14 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript" src="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.js" defer></script>
-
-    <script type="text/javascript" src="{{asset('assets/js/home/script.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/js/home/jquery.reflection.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/js/home/jquery.cloud9carousel.js')}}"></script>
-
     <!-- Other -->
     <script type="text/javascript">
         AOS.init();
         $(document).ready(function () {
+            $('body').addClass('loaded');
             setTimeout(function () {
-                $('body').addClass('loaded');
-                setTimeout(function () {
-                    $('#navbar').css('display', 'block');
-                }, 800);
-            }, 3000);
+                $('#navbar').css('display', 'block');
+            }, 800);
         });
         // Scrolling Effect
         $(window).scroll(function () {

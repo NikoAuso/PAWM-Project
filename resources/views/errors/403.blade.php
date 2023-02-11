@@ -1,6 +1,6 @@
 @extends('errors::layout')
 
-@section('title', __('Forbidden'))
+@section('title', __('Proibito'))
 
 @section('code', '403')
 
