@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Liste;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TableListeSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class TableListeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('liste')->insert([
+        Liste::query()->create([
             array('list_id' => '3', 'event_id' => '20', 'name' => 'CRISTINA', 'surname' => 'BORDONI', 'quantity' => '3', 'entered' => '0', 'fatto_da' => '2', 'created_at' => '2022-11-07 18:01:05', 'created_by' => '2'),
             array('list_id' => '4', 'event_id' => '20', 'name' => 'MICHELE', 'surname' => 'MOSCA', 'quantity' => '4', 'entered' => '0', 'fatto_da' => '2', 'created_at' => '2022-11-07 18:02:43', 'created_by' => '2'),
             array('list_id' => '5', 'event_id' => '20', 'name' => 'LEONARDO', 'surname' => 'MALDINI', 'quantity' => '8', 'entered' => '0', 'fatto_da' => '1', 'created_at' => '2022-11-07 19:06:00', 'created_by' => '2'),
