@@ -25,9 +25,10 @@
 [![Composer][Composer.com]][Composer-url]
 [![Font-awesome][Font-Awesome.com]][Font-Awesome-url]
 
-Il sito MamateamCeleste è un sito vetrina di un team che si occupa di pubbliche relazioni per diverse discoteche nella
+Il sito Mamateam/Celeste è un sito vetrina di un team che si occupa di pubbliche relazioni per diverse discoteche nella
 provincia di Ancona.
 All'interno del sito vengono pubblicati tutti i futuri eventi di queste discoteche con tutti i relativi dettagli.
+Il sito è anche una PWA che permette agli utenti registrati di accedere alla dashboard direttamente dall'app.
 
 ## Author
 👤 **Nicolò Ausili**

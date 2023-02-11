@@ -56,6 +56,8 @@ class Tavoli extends Model
     protected $connection = 'mysql';
 
     /**
+     * Get all the available table from the database
+     *
      * @return array|Collection
      */
     public static function getTavoli(): array|Collection
@@ -68,6 +70,7 @@ class Tavoli extends Model
     }
 
     /**
+     * Get all the available table for a specific event from the database
      *
      * @param int $eventId
      * @return array|Collection
@@ -80,6 +83,7 @@ class Tavoli extends Model
     }
 
     /**
+     * Get a specific table from the database
      *
      * @param int $id
      * @return array|Collection
@@ -92,6 +96,7 @@ class Tavoli extends Model
     }
 
     /**
+     * Get all the available table created by an user from the database
      *
      * @param int $user_id
      * @return array|Collection
@@ -99,11 +104,13 @@ class Tavoli extends Model
     public static function getTavoloByUser(int $user_id): array|Collection
     {
         return self::query()
-            ->where('id', $user_id)
+            ->where('fattoDa', $user_id)
             ->get();
     }
 
     /**
+     * Create a table
+     *
      * @param TavoloRequest $request
      * @return void
      */
@@ -128,6 +135,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Edit a table
+     *
      * @param TavoloRequest $request
      * @param $id
      * @return void
@@ -151,6 +160,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Delete a table
+     *
      * @param $id
      * @return void
      */
@@ -165,6 +176,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Search a table in the database
+     *
      * @param TavoloSearchRequest $request
      * @return null
      */
@@ -198,6 +211,7 @@ class Tavoli extends Model
     }
 
     /**
+     * Close the season and create PDFs
      * @param ChiudiStagioneRequest $details
      * @return bool
      */
@@ -231,6 +245,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Create CSV file
+     *
      * @param $tables
      * @param $filename
      * @param $path
@@ -243,8 +259,6 @@ class Tavoli extends Model
         header('Pragma: no-cache');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Expires: 0');
-
-        dd($path.$filename);
 
         $handle = fopen($path . $filename . '.csv', 'w');
 
@@ -269,6 +283,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Create PDF file
+     *
      * @param $tables
      * @param $details
      * @param $name
@@ -288,6 +304,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Create PDF file of the leaderboard
+     *
      * @param $details
      * @param $name
      * @param $path
@@ -311,6 +329,8 @@ class Tavoli extends Model
     }
 
     /**
+     * Logging system
+     *
      * @param Tavoli $table
      * @param string $operation
      * @return void

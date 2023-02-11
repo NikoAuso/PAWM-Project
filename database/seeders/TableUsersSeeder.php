@@ -15,8 +15,7 @@ class TableUsersSeeder extends Seeder
      */
     public function run(): void
     {
-        $data =
-            [
+        $user = User::query()->create([
                 'name' => fake()->firstName(),
                 'surname' => fake()->lastName(),
                 'email' => fake()->unique()->safeEmail(),
@@ -25,8 +24,7 @@ class TableUsersSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'active' => 1,
                 'created_at' => now()
-            ];
-        $user = User::query()->create($data);
+            ]);
         $user->assignRole('pr');
     }
 }

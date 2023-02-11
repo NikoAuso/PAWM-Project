@@ -27,6 +27,11 @@
                             <div class="col-xl-8 col-xxl-8">
                                 <div class="text-left text-xl-start text-xxl-left mb-4 mb-xl-0 mb-xxl-4">
                                     <h1 class="text-primary">Benvenuti nell'area riservata!</h1>
+                                    <p class="text-gray-700 mb-0">Novità
+                                        dell'aggiornamento {{config('app.version')}}</p>
+                                    <ul>
+                                        <li>Risoluzione bug</li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-xxl-4 text-center">
@@ -37,6 +42,47 @@
                     </div>
                 </div>
             </div>
+            @role('admin')
+            <div class="col-xxl-3 col-lg-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                <div class="text-white-75 small">Utenti</div>
+                                <div class="text-lg font-weight-bold">{{$allUser}} Pr registrati</div>
+                                <div class="text-lg font-weight-bold">{{$inactiveUser}} Pr non attivi</div>
+                            </div>
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="{{route('users.pr')}}">Vedi dettagli</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            @endrole
+            @role('admin')
+            <div class="col-xxl-3 col-lg-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                <div class="text-white-75 small">Eventi</div>
+                                <div class="text-lg font-weight-bold">{{$allEvents}} Eventi</div>
+                                <div class="text-lg font-weight-bold">{{$deletedEvents}} Eliminati</div>
+                            </div>
+                            <i class="fa fa-table fa-5x"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="{{route('events')}}">Vedi dettagli</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            @endrole
+            @role('pr')
             <div class="col-xxl-3 col-lg-6">
                 <div class="card bg-success text-white mb-4">
                     <div class="card-body">
@@ -49,11 +95,15 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{route('liste')}}">Vedi dettagli</a>
+                        <a class="small text-white stretched-link"
+                           href="{{\Illuminate\Support\Facades\Auth::user()->getRoleNames()->get(0) == 'admin' ? route('liste') : route('liste_pr')}}">Vedi
+                            dettagli</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
+            @endrole
+            @role('pr')
             <div class="col-xxl-3 col-lg-6">
                 <div class="card bg-danger text-white mb-4">
                     <div class="card-body">
@@ -66,11 +116,14 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{route('tavoli')}}">Vedi dettagli</a>
+                        <a class="small text-white stretched-link"
+                           href="{{\Illuminate\Support\Facades\Auth::user()->getRoleNames()->get(0) == 'admin' ? route('tavoli') : route('tavoli_pr')}}">Vedi
+                            dettagli</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
+            @endrole
         </div>
     </div>
     <!-- End of Main page-->

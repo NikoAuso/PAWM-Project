@@ -54,7 +54,7 @@ class Liste extends Model
     ];
 
     /**
-     * Gets all the available events from the database.
+     * Gets all the available lists from the database.
      *
      * @return array|Collection
      */
@@ -69,7 +69,7 @@ class Liste extends Model
     }
 
     /**
-     * Gets all the deleted events from the database.
+     * Gets all the lists by event ID from the database.
      *
      * @param int $id
      * @return Collection|array
@@ -86,6 +86,23 @@ class Liste extends Model
     }
 
     /**
+     * Gets all the lists by user ID from the database.
+     *
+     * @param int $id
+     * @return Collection|array
+     */
+    public static function getListByUserId(int $id): Collection|array
+    {
+        return Liste::query()
+            ->join('users as users', 'users.id', '=', 'liste.fatto_da')
+            ->where('users.id', $id)
+            ->orderBy('liste.surname', 'asc')
+            ->get();
+    }
+
+    /**
+     * Insert new list
+     *
      * @param ListeRequest $request
      * @return void
      */
@@ -112,6 +129,8 @@ class Liste extends Model
     }
 
     /**
+     * Edit a list
+     *
      * @param ListeRequest $request
      * @return void
      */
@@ -129,6 +148,8 @@ class Liste extends Model
     }
 
     /**
+     * Delete a list
+     *
      * @param int $id
      * @return void
      */

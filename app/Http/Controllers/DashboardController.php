@@ -51,7 +51,7 @@ class DashboardController extends Controller
     }
     public function index(): Application|Factory|View|RedirectResponse
     {
-        if(Auth::user()->role('admin')) {
+        if(Auth::user()->getRoleNames()->get(0) == 'admin') {
             $data = [
                 'allUser' => $this->userModel->all()->count(),
                 'inactiveUser' => $this->userModel->getInactiveUsers()->count(),
@@ -60,14 +60,14 @@ class DashboardController extends Controller
                 'allListe' => $this->listeModel->all()->count(),
                 'allTavoli' => $this->tavoliModel->all()->count()
             ];
-            return view('ar/dashboard-admin')
+            return view('ar/dashboard')
                 ->with($data);
-        }elseif (Auth::user()->role('pr')){
+        }elseif (Auth::user()->getRoleNames()->get(0) == 'pr'){
             $data = [
-                'liste' => $this->listeModel->all()->count(),
-                'allTavoli' => $this->tavoliModel->all()->count()
+                'allListe' => $this->listeModel->getListByUserId(Auth::id())->count(),
+                'allTavoli' => $this->tavoliModel->getTavoloByUser(Auth::id())->count()
             ];
-            return view('ar/dashboard-user')
+            return view('ar/dashboard')
                 ->with($data);
         }else{
             return redirect()->back()->withErrors('Errore generico');
