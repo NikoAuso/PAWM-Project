@@ -82,7 +82,7 @@
                 </div>
             </div>
             @endrole
-            @role('pr')
+            @role('admin|pr')
             <div class="col-xxl-3 col-lg-6">
                 <div class="card bg-success text-white mb-4">
                     <div class="card-body">
@@ -103,7 +103,7 @@
                 </div>
             </div>
             @endrole
-            @role('pr')
+            @role('admin|pr')
             <div class="col-xxl-3 col-lg-6">
                 <div class="card bg-danger text-white mb-4">
                     <div class="card-body">

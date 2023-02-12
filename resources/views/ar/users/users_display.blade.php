@@ -91,21 +91,25 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <div class="btn-group" role="group">
-                                                <a type="button" class="btn btn-primary"
-                                                   href="{{route('users.edit', ['id' => $user->id, 'page' => basename($_SERVER['REQUEST_URI'])])}}"><i
-                                                        class="fas fa-edit"></i></a>
-                                                <a type="button" class="btn btn-secondary"
-                                                   href="{{route('users.profile', ['id' => $user->id])}}"><i
-                                                        class="fas fa-eye"></i></a>
-                                                <a type="button" href="#" class="btn btn-danger delete-btn"
-                                                   data-bs-toggle="modal"
-                                                   data-bs-target="#confirm-delete"
-                                                   data-link="{{route('delete-user', ['id' => $user->id, 'page' => (basename($_SERVER['REQUEST_URI']))])}}"
-                                                   data-descrizione="Sei sicuro di voler eliminare l'utente <strong>{{$user->username}}</strong>?">
-                                                    <i class="fa-solid fa-user-slash"></i>
-                                                </a>
-                                            </div>
+                                            @if(\Illuminate\Support\Facades\Auth::id() == $user->id)
+                                                <span class="badge bg-secondary">YOU</span>
+                                            @else
+                                                <div class="btn-group" role="group">
+                                                    <a type="button" class="btn btn-primary"
+                                                       href="{{route('users.edit', ['id' => $user->id, 'page' => basename($_SERVER['REQUEST_URI'])])}}"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    <a type="button" class="btn btn-secondary"
+                                                       href="{{route('users.profile', ['id' => $user->id])}}"><i
+                                                            class="fas fa-eye"></i></a>
+                                                    <a type="button" href="#" class="btn btn-danger delete-btn"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#confirm-delete"
+                                                       data-link="{{route('delete-user', ['id' => $user->id, 'page' => (basename($_SERVER['REQUEST_URI']))])}}"
+                                                       data-descrizione="Sei sicuro di voler eliminare l'utente <strong>{{$user->username}}</strong>?">
+                                                        <i class="fa-solid fa-user-slash"></i>
+                                                    </a>
+                                                </div>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

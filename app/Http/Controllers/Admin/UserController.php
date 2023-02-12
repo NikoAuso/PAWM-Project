@@ -121,7 +121,7 @@ class UserController extends Controller
         if (User::query()->where('id', $id)->exists()) {
             $this->userModel->reactivateUser($id);
             return redirect()->route('users.deleted')
-                ->with('message', 'Utente ripristinato');
+                ->with('message', 'Utente riattivato');
         } else {
             return redirect()->route('users.deleted')
                 ->withErrors('L\'utente non esiste');

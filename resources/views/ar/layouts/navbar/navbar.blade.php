@@ -42,7 +42,7 @@
                         <a class="nav-link" href="{{route('users.admin')}}">Amministratori</a>
                         <a class="nav-link" href="{{route('users.pr')}}">Pr semplici</a>
                         <a class="nav-link" href="{{route('users.insert', ['page' => 'pr'])}}">Aggiungi nuovo</a>
-                        <a class="nav-link" href="{{route('users.deleted')}}">Utenti disattivati</a>
+                        <a class="nav-link" href="{{route('users.deleted')}}">Utenti non attivi</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Eventi)-->

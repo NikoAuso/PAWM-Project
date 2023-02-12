@@ -84,7 +84,7 @@
                                         <a href="#" class="btn btn-success delete_btn" data-bs-toggle="modal"
                                            data-bs-target="#confirm"
                                            data-link="{{route('restore-user', $user->id)}}"
-                                           data-descrizione="Vuoi ripristinare l'utente <strong>{{$user->username}}</strong>?">
+                                           data-descrizione="Vuoi riattivare l'utente <strong>{{$user->username}}</strong>?">
                                             <i class="fas fa-trash-restore"></i>
                                         </a>
                                         <a href="#" class="btn btn-danger delete_btn" data-bs-toggle="modal"
