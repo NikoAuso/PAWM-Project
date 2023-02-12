@@ -79,8 +79,7 @@ class Profile extends Model
         'account_instagram',
         'account_facebook',
         'address',
-        'birthday',
-        'updated_by'
+        'birthday'
     ];
 
     /**
@@ -135,7 +134,6 @@ class Profile extends Model
             ->update([
                 'account_facebook' => $request->account_facebook,
                 'account_instagram' => $request->account_instagram,
-                'updated_by' => Auth::id()
             ]);
     }
 

@@ -56,6 +56,16 @@ return [
             'throw' => false,
         ],
 
+        'avatar' => [
+            'driver' => 'local',
+            'root' =>  public_path() . '/assets/img/avatar/'
+        ],
+
+        'events' => [
+            'driver' => 'local',
+            'root' =>  public_path() . '/assets/img/events/'
+        ]
+
     ],
 
     /*
