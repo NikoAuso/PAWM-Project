@@ -20,7 +20,7 @@ class TableUsersSeeder extends Seeder
                 'surname' => fake()->lastName(),
                 'email' => fake()->unique()->safeEmail(),
                 'email_verified_at' => null,
-                'username' => 'UtenteProva2',
+                'username' => 'UtentePr',
                 'password' => Hash::make('password'),
                 'active' => 1,
                 'created_at' => now()

@@ -18,7 +18,7 @@ class TableAdminSeeder extends Seeder
         $user = User::query()->create([
             'name' => 'Nicolò',
             'surname' => 'Ausili',
-            'email' => 'nicolo.ausili@gstudenti.unicam.it',
+            'email' => 'nicolo.ausili@studenti.unicam.it',
             'email_verified_at' => null,
             'username' => 'NikoAuso',
             'password' => Hash::make('12345678'),

@@ -14,7 +14,7 @@ class TableListeSeeder extends Seeder
      */
     public function run(): void
     {
-        Liste::query()->create([
+        $datas = [
             array('list_id' => '3', 'event_id' => '20', 'name' => 'CRISTINA', 'surname' => 'BORDONI', 'quantity' => '3', 'entered' => '0', 'fatto_da' => '2', 'created_at' => '2022-11-07 18:01:05', 'created_by' => '2'),
             array('list_id' => '4', 'event_id' => '20', 'name' => 'MICHELE', 'surname' => 'MOSCA', 'quantity' => '4', 'entered' => '0', 'fatto_da' => '2', 'created_at' => '2022-11-07 18:02:43', 'created_by' => '2'),
             array('list_id' => '5', 'event_id' => '20', 'name' => 'LEONARDO', 'surname' => 'MALDINI', 'quantity' => '8', 'entered' => '0', 'fatto_da' => '1', 'created_at' => '2022-11-07 19:06:00', 'created_by' => '2'),
@@ -24,6 +24,9 @@ class TableListeSeeder extends Seeder
             array('list_id' => '9', 'event_id' => '20', 'name' => 'FRANCESCO', 'surname' => 'BELELLI', 'quantity' => '2', 'entered' => '0', 'fatto_da' => '2', 'created_at' => '2022-11-09 16:16:11', 'created_by' => '2'),
             array('list_id' => '10', 'event_id' => '21', 'name' => 'ELISA', 'surname' => 'FRANCOLETTI', 'quantity' => '3', 'entered' => '0', 'fatto_da' => '2', 'created_at' => '2022-11-09 18:49:24', 'created_by' => '2'),
             array('list_id' => '11', 'event_id' => '21', 'name' => 'Riccardo', 'surname' => 'Taddei', 'quantity' => '4', 'entered' => '0', 'fatto_da' => '1', 'created_at' => '2022-11-09 20:42:59', 'created_by' => '2')
-        ]);
+        ];
+
+        foreach ($datas as $data)
+            Liste::query()->create($data);
     }
 }
